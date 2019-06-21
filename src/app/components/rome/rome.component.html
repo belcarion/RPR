@@ -1,0 +1,25 @@
+<div>
+  <div fxLayout="row" fxLayoutGap="20px" class="rome1">
+    <span>Trésor</span>
+    <span>{{ tresor }}</span>
+    <span>Agitation sociale</span>
+    <span>{{ agitationSociale }}</span>
+  </div>
+  <span>Armée</span>
+  <div fxLayout="row" fxLayoutGap="20px" class="rome1">
+      <span>Forces Actives</span>
+      <span>{{ forcesActives.length }}</span>
+
+  </div>
+<div fxLayout="column">
+    <span>Forum</span>
+    <app-forum [forum]="forum"></app-forum>
+    <span>Guerres actives</span>
+    <span>Guerres non entreprises</span>
+    <span>Guerres imminentes</span>
+    <span>Guerres inactives</span>
+    <span>Chefs ennemis</span>
+    <span>Relève sénatoriale</span>
+    <span>Concessions détruites</span>
+    <app-concession [concessions]="concessionsDetruites"></app-concession>
+</div>

@@ -1,0 +1,36 @@
+<div fxLayout="row" fxLayoutGap="40px">
+  <div>{{faction.nom}}</div>
+  <div fxLayout="row"><span>Trésor : {{ faction.tresor }}</span></div>
+  <div fxLayout="row" >Influence : </div>
+  <div fxLayout="row" >Votes : {{ faction.votes }}</div>
+  <div fxLayout="row" >Cartes :</div>
+  <mat-select style="width: 120px">
+    <mat-option *ngFor="let carte of faction.cartes">
+      {{ carte.nom}}
+    </mat-option>
+  </mat-select>
+</div>
+
+<clr-datagrid>
+  <clr-dg-column [clrDgField]="'nom'">Nom</clr-dg-column>
+  <clr-dg-column>Charge</clr-dg-column>
+  <clr-dg-column [clrDgField]="'militaire'">Militaire</clr-dg-column>
+  <clr-dg-column>Eloquence</clr-dg-column>
+  <clr-dg-column>Influence</clr-dg-column>
+  <clr-dg-column>Trésor</clr-dg-column>
+  <clr-dg-column>Chevaliers</clr-dg-column>
+
+  <clr-dg-row *clrDgItems="let senateur of faction.senateurs">
+    <clr-dg-cell [ngClass]="{ 'chef': senateur.chef, 'corrompu': senateur.corrompu }">{{ senateur.nom }}</clr-dg-cell>
+    <clr-dg-cell>{{ senateur.charge }}</clr-dg-cell>
+    <clr-dg-cell>{{ senateur.militaire }}</clr-dg-cell>
+    <clr-dg-cell>{{ senateur.eloquence }}</clr-dg-cell>
+    <clr-dg-cell>{{ senateur.influence }}</clr-dg-cell>
+    <clr-dg-cell>{{ senateur.tresor }}</clr-dg-cell>
+    <clr-dg-cell>{{ senateur.chevaliers }}</clr-dg-cell>
+    <clr-dg-row-detail *clrIfExpanded="true">
+      <app-concession [concessions]="senateur.concessions"></app-concession>
+      <app-province [province]="senateur.province"></app-province>
+    </clr-dg-row-detail>
+  </clr-dg-row>
+</clr-datagrid>
