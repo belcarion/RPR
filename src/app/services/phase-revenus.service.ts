@@ -26,10 +26,12 @@ export class PhaseRevenusService {
         // Revenus de base
         sen.chef ? revenus += 3 : revenus++;
         revenus += sen.chevaliers;
-        sen.concessions.forEach((c: Concession) => {
-          revenus += c.revenu;
-          sen.corrompu = true;
-        });
+        if (sen.concessions && sen.concessions.length > 0) {
+          sen.concessions.forEach((c: Concession) => {
+            revenus += c.revenu;
+            sen.corrompu = true;
+          });
+        }
         // Spoliation des provinces
         if (sen.province) {
           let test = false;

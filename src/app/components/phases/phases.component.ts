@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { PhaseMortaliteService } from 'src/app/services/phase-mortalite.service';
 import { FactionService } from 'src/app/services/faction.service';
 import { PhaseRevenusService } from 'src/app/services/phase-revenus.service';
+import { Phase } from 'src/app/services/tour.service';
 
 @Component({
   selector: "app-phases",
@@ -9,6 +10,9 @@ import { PhaseRevenusService } from 'src/app/services/phase-revenus.service';
   styleUrls: ["./phases.component.scss"]
 })
 export class PhasesComponent implements OnInit {
+
+  public tour = 1;
+  public phase: Phase;
   public isMortaliteDone: boolean[] = [false, false, false];
   public isRevenuDone: boolean[] = [false, false, false, false, false, false, false, false, false];
   public isForumDone = false;
@@ -21,9 +25,12 @@ export class PhasesComponent implements OnInit {
     private phaseMortaliteService: PhaseMortaliteService,
     private phaseRevenusService: PhaseRevenusService
   ) {
+    this.phase = Phase.MORTALITE;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   public resolutionMortalite() {
     this.phaseMortaliteService.resolutionMortalite();

@@ -1,3 +1,8 @@
+<div fxLayout="row" fxLayoutGap="50px" class="phases">
+  <span>Tour {{tour}}</span>
+  <span>{{phase}}</span>
+</div>
+
 <div fxLayout="row" fxLayoutAlign="space-around center">
   <mat-checkbox  [checked]="isMortaliteDone[0]" (click)="isMortaliteDone[0] = true">Mortalité</mat-checkbox>
   <mat-checkbox disabled [checked]="isRevenuDone[0]">Revenu</mat-checkbox>
