@@ -1,0 +1,16 @@
+<div *ngIf="etape === 1">
+  <span>Spoliation province ?</span>
+  <div *ngFor="let sen of gouverneurs" >
+    <span>Le gouverneur {{sen.nom}} spolie-t'il sa province {{sen.province.nom}} ?</span>
+      <mat-button-toggle-group name="spolie" (change)="spoliationPar($event, sen)">
+        <mat-button-toggle value="oui">Oui</mat-button-toggle>
+        <mat-button-toggle value="non">Non</mat-button-toggle>
+      </mat-button-toggle-group>
+  </div>
+</div>
+<div *ngIf="etape === 2">
+  <span>Redistribution</span>
+</div>
+<div *ngIf="etape === 3">
+  <span>Contributions</span>
+</div>

@@ -150,7 +150,7 @@ export class RomeService {
   }
   public prendreForum(c: Carte) {
     const forum = this.forum.getValue();
-    const idx =forum.findIndex((cf: Carte) => cf.nom === c.nom);
+    const idx = forum.findIndex((cf: Carte) => cf.nom === c.nom);
     forum.splice(idx, 1);
     this.forum.next(forum);
   }

@@ -3,7 +3,9 @@
   <span>{{phase}}</span>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="space-around center">
+  <app-phase-revenu *ngIf="phase === 'Phase de revenu'"></app-phase-revenu>
+
+<!-- <div fxLayout="row" fxLayoutAlign="space-around center">
   <mat-checkbox  [checked]="isMortaliteDone[0]" (click)="isMortaliteDone[0] = true">Mortalité</mat-checkbox>
   <mat-checkbox disabled [checked]="isRevenuDone[0]">Revenu</mat-checkbox>
   <mat-checkbox disabled [checked]="isForumDone">Forum</mat-checkbox>
@@ -26,4 +28,4 @@
   <mat-checkbox disabled [checked]="isRevenuDone[7]">Contributions</mat-checkbox>
   <mat-checkbox disabled [checked]="isRevenuDone[8]">Dettes</mat-checkbox>
   <mat-checkbox disabled [checked]="isRevenuDone[9]">Retours gouverneurs</mat-checkbox>
-</div>
+</div> -->

@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class FactionService {
-  private _factions: BehaviorSubject<Faction[]> = new BehaviorSubject<
+  private _factions: BehaviorSubject<Faction[]> = new BehaviorSubject
     Faction[]
   >([]);
 
@@ -29,6 +29,10 @@ export class FactionService {
   }
   public majFactions(f: Faction[]) {
     this._factions.next(f);
+  }
+
+  public getFactionJoueur() {
+    return this._factions.getValue().find((f: Faction) => f.id === TypeFaction.JOUEUR);
   }
 
   public getTotalAptitude(faction: Faction, aptitude: string): number {
@@ -340,7 +344,12 @@ export class FactionService {
           }
         }
       );
+    } else if (faction.id === TypeFaction.JOUEUR) {
+      faction.senateurs[0].chef = true;
+      faction.senateurs[0].province = this.romeService.prendreProvince();
+      faction.senateurs[1].province = this.romeService.prendreProvince();
     }
+    // TMP Tests
     if (cdf) {
       cdf.chef = true;
      cdf.province = this.romeService.prendreProvince();

@@ -13,6 +13,8 @@ export class PhasesComponent implements OnInit {
 
   public tour = 1;
   public phase: Phase;
+  private finDePartie = false;
+
   public isMortaliteDone: boolean[] = [false, false, false];
   public isRevenuDone: boolean[] = [false, false, false, false, false, false, false, false, false];
   public isForumDone = false;
@@ -25,18 +27,21 @@ export class PhasesComponent implements OnInit {
     private phaseMortaliteService: PhaseMortaliteService,
     private phaseRevenusService: PhaseRevenusService
   ) {
-    this.phase = Phase.MORTALITE;
   }
 
   ngOnInit() {
-
+    // while (!this.finDePartie) {
+      // this.resolutionMortalite();
+      this.resolutionRevenus();
+    // }
   }
 
   public resolutionMortalite() {
+    this.phase = Phase.MORTALITE;
     this.phaseMortaliteService.resolutionMortalite();
   }
 
   public resolutionRevenus() {
-    this.phaseRevenusService.genereRevenus();
+    this.phase = Phase.REVENU;
   }
 }
