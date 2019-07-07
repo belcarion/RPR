@@ -16,7 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class FactionService {
-  private _factions: BehaviorSubject<Faction[]> = new BehaviorSubject
+  private _factions: BehaviorSubject<Faction[]> = new BehaviorSubject<
     Faction[]
   >([]);
 
