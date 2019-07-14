@@ -32,6 +32,10 @@ export class PhaseRevenusService {
             sen.corrompu = true;
           });
         }
+        if (faction.id === TypeFaction.JOUEUR) {
+          sen.tresor = revenus;
+          revenus = 0;
+        }
         // Spoliation des provinces
         if (sen.province) {
           let test = false;

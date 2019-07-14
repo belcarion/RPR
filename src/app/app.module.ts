@@ -19,6 +19,7 @@ import { RomeComponent } from './components/rome/rome.component';
 import { PhasesComponent } from './components/phases/phases.component';
 import { ForumComponent } from './components/forum/forum.component';
 import { PhaseRevenuComponent } from './components/phases/phase-revenu/phase-revenu.component';
+import { PhaseMortaliteComponent } from './components/phases/phase-mortalite/phase-mortalite.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { PhaseRevenuComponent } from './components/phases/phase-revenu/phase-rev
     RomeComponent,
     PhasesComponent,
     ForumComponent,
-    PhaseRevenuComponent
+    PhaseRevenuComponent,
+    PhaseMortaliteComponent
   ],
   imports: [
     BrowserModule,

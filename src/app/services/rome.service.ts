@@ -46,8 +46,16 @@ export class RomeService {
       sen.ancienConsul = false;
       return sen;
     });
+    const hommesEtat: Senateur[] = HOMMESDETAT.map((sen: Senateur) => {
+      sen.concessions = [];
+      sen.chevaliers = 0;
+      sen.tresor = 0;
+      sen.corrompu = false;
+      sen.ancienConsul = false;
+      return sen;
+    });
     this._pioche = this._pioche.concat(senateurs);
-    this._pioche = this._pioche.concat(HOMMESDETAT);
+    this._pioche = this._pioche.concat(hommesEtat);
     this._pioche = this._pioche.concat(CONCESSIONS);
     this._pioche = this._pioche.concat(CHEFS_ENNEMIS);
     this._pioche = this._pioche.concat(INTRIGUES);

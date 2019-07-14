@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FactionService } from 'src/app/services/faction.service';
 import { Faction, Senateur } from 'src/app/data.interface';
 import { PhaseRevenusService } from 'src/app/services/phase-revenus.service';
@@ -13,6 +13,8 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
   styleUrls: ['./phase-revenu.component.scss']
 })
 export class PhaseRevenuComponent implements OnInit {
+  @Output() fin: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   public etape = 0;
   public faction: Faction;
   public gouverneurs: Senateur[];
@@ -49,6 +51,10 @@ export class PhaseRevenuComponent implements OnInit {
   }
 
   public suivant() {
-    this.etape++;
+    if (this.etape < 4) {
+      this.etape++;
+    } else {
+      this.fin.emit(true);
+    }
   }
 }
