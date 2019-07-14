@@ -1,31 +1,5 @@
-<div fxLayout="row" fxLayoutGap="50px" class="phases">
-  <span>Tour {{tour}}</span>
-  <span>{{phase}}</span>
-</div>
-
+<div fxLayout="row" fxLayoutGap="50px">
+  <span class="phases">Tour {{tour}}</span>
+  <span class="phases">{{phase}}</span>
   <app-phase-revenu *ngIf="phase === 'Phase de revenu'"></app-phase-revenu>
-
-<!-- <div fxLayout="row" fxLayoutAlign="space-around center">
-  <mat-checkbox  [checked]="isMortaliteDone[0]" (click)="isMortaliteDone[0] = true">Mortalité</mat-checkbox>
-  <mat-checkbox disabled [checked]="isRevenuDone[0]">Revenu</mat-checkbox>
-  <mat-checkbox disabled [checked]="isForumDone">Forum</mat-checkbox>
-  <mat-checkbox disabled [checked]="isPlebeDone">Plèbe</mat-checkbox>
-  <mat-checkbox disabled [checked]="isSenatDone">Sénat</mat-checkbox>
-  <mat-checkbox disabled [checked]="isCombatDone">Combat</mat-checkbox>
-  <mat-checkbox disabled [checked]="isGuerreCivileDone">Guerre civile</mat-checkbox>
 </div>
-<div fxLayout="row" fxLayoutAlign="space-around center">
-  <mat-checkbox disabled [checked]="isMortaliteDone[1]">Activation guerres imminentes</mat-checkbox>
-  <mat-checkbox [checked]="isMortaliteDone[2]" (click)="resolutionMortalite()">Résolution mortalité</mat-checkbox>
-</div>
-<div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="isMortaliteDone[0]">
-  <mat-checkbox [checked]="isRevenuDone[1]" (click)="resolutionRevenus()">Revenus personnels et état</mat-checkbox>
-  <mat-checkbox disabled [checked]="isRevenuDone[2]">Spoliations provinces</mat-checkbox>
-  <mat-checkbox disabled [checked]="isRevenuDone[3]">Entretien des rebelles</mat-checkbox>
-  <mat-checkbox disabled [checked]="isRevenuDone[4]">Redistribution</mat-checkbox>
-  <mat-checkbox disabled [checked]="isRevenuDone[5]">Développement provinces</mat-checkbox>
-  <mat-checkbox disabled [checked]="isRevenuDone[6]">Impôts</mat-checkbox>
-  <mat-checkbox disabled [checked]="isRevenuDone[7]">Contributions</mat-checkbox>
-  <mat-checkbox disabled [checked]="isRevenuDone[8]">Dettes</mat-checkbox>
-  <mat-checkbox disabled [checked]="isRevenuDone[9]">Retours gouverneurs</mat-checkbox>
-</div> -->

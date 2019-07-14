@@ -109,9 +109,9 @@ export class PhaseRevenusService {
   public spoliationProvince(senateur: Senateur) {
     const mod = senateur.province.spoliation[senateur.province.developee];
     const montant = this.romeService.getRandomNumber(6, 1, mod);
-    console.log('Province ' + senateur.province.nom + ' spoliée pour ' + montant + ' talents');
+    let res = 'Province spoliée pour ' + montant + ' talent(s), ';
     if (montant > 0) {
-      console.log('Le sénateur ' + senateur.nom + ' gagne ' + montant + ' talents');
+      res += 'le sénateur gagne ' + montant + ' talent(s)';
       this.factionService.getFactionJoueur().senateurs.some((sen: Senateur) => {
         if (sen.nom === senateur.nom) {
           sen.tresor += montant;
@@ -121,8 +121,9 @@ export class PhaseRevenusService {
         }
       });
     } else {
-      console.log('Rome paye ' + montant + ' talents');
+      res += 'Rome paye ' + montant + ' talent(s)';
       this.romeService.majTresor(montant);
     }
+    return res;
   }
 }
