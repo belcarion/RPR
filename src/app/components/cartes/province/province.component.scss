@@ -1,0 +1,15 @@
+// @import 'commun';
+
+.developpee {
+  // @include carte;
+  // border-color: green;
+  border: 5px solid green;
+  border-radius: 10px;
+  padding: 5px;
+}
+.nondeveloppee {
+  border: 5px solid yellow;
+  border-radius: 10px;
+  padding: 5px;
+//  border-color: yellow;
+}

@@ -19,15 +19,15 @@ export enum TypeFaction {
   POPULISTES = 'Populistes'
 }
 export enum TypeCarte {
-  INTRIGUE,
-  CONCESSION,
-  LOI,
-  HOMMEDETAT,
-  SENATEUR,
-  CONFLIT,
-  CHEFENNEMI,
-  GUERRE,
-  PROVINCE
+  INTRIGUE = 'intrigue',
+  CONCESSION = 'concession',
+  LOI = 'loi',
+  HOMMEDETAT = 'hommedetat',
+  SENATEUR = 'senateur',
+  CONFLIT = 'conflit',
+  CHEFENNEMI = 'chefennemi',
+  GUERRE = 'guerre',
+  PROVINCE = 'province'
 }
 export enum TypeIntrigue {
   INTRIGUE_D_ALCOVE,
@@ -80,7 +80,7 @@ export interface Province extends Carte {
   id: ProvinceId;
   forceMilitaire: number[]; // [ non dév, dév]
   forceNavale: number[]; // [ non dév, dév]
-  developee: number; // non dév = 0, dév = 1
+  developpee: number; // non dév = 0, dév = 1
   spoliation: number[]; // [mod non dév, mod dév]
   revenusEtat: number[]; // [mod non dév, mod dév]
   mandat?: number;

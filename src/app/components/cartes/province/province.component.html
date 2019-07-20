@@ -1,0 +1,7 @@
+<div *ngIf="province" fxLayout="column" fxLayoutAlign="center start"
+  [ngClass]="{'nondeveloppee': !province.developpee,'developpee': province.developpee}">
+  <div>{{province.nom}}</div>
+  <div>Force militaire : {{province.forceMilitaire[province.developpee]}}</div>
+  <div>Force navale : {{province.forceNavale[province.developpee]}}</div>
+  <div>Revenu: {{province.spoliation[province.developpee]}}</div>
+</div>

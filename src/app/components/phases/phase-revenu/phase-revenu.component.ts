@@ -21,7 +21,7 @@ export class PhaseRevenuComponent implements OnInit {
   public spoliation: number;
   public result: string[] = [];
 
-  public aRedisdribuer = 0;
+  public aRedistribuer = 0;
   public senateurs: Senateur[];
 
   constructor(
@@ -51,10 +51,33 @@ export class PhaseRevenuComponent implements OnInit {
   }
 
   public suivant() {
-    if (this.etape < 4) {
+    if (this.etape < 5) {
       this.etape++;
     } else {
       this.fin.emit(true);
     }
+  }
+
+  public clickFaction(plus: boolean) {
+    if (!plus) {
+      this.faction.tresor--;
+      this.aRedistribuer++;
+    } else {
+      this.faction.tresor++;
+      this.aRedistribuer--;
+    }
+  }
+  public clickSenateur(plus: boolean, senateur: Senateur) {
+    if (!plus) {
+      senateur.tresor--;
+      this.aRedistribuer++;
+    } else {
+      senateur.tresor++;
+      this.aRedistribuer--;
+    }
+  }
+
+  public developpementProvince() {
+    this.phaseRevenusService.developpementProvince();
   }
 }

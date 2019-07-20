@@ -66,17 +66,17 @@ export enum ProvinceId {
 }
 export const PROVINCES: Province[] = [
   { id: ProvinceId.SICILE, nom: 'SICILE (-241)', forceMilitaire: [2, 2], forceNavale: [0, 0],
-    spoliation: [0, 4], revenusEtat: [-2, 2], developee: 0, type: TypeCarte.PROVINCE},
+    spoliation: [0, 4], revenusEtat: [-2, 2], developpee: 0, type: TypeCarte.PROVINCE},
   { id: ProvinceId.CORSE_SARDAIGNE, nom: 'CORSE & SARDAIGNE (-231)', forceMilitaire: [0, 2], forceNavale: [0, 5],
-    spoliation: [-5, -1], revenusEtat: [-8, -6], developee: 0, type: TypeCarte.PROVINCE},
+    spoliation: [-5, -1], revenusEtat: [-8, -6], developpee: 0, type: TypeCarte.PROVINCE},
     { id: ProvinceId.ESPAGNE_ULTERIEURE, nom: 'ESPAGNE ULTERIEURE (-197)', forceMilitaire: [2, 4], forceNavale: [0, 0],
-    spoliation: [-3, 1], revenusEtat: [-8, -1], developee: 0, type: TypeCarte.PROVINCE},
+    spoliation: [-3, 1], revenusEtat: [-8, -1], developpee: 0, type: TypeCarte.PROVINCE},
     { id: ProvinceId.ESPAGNE_CITERIEURE, nom: 'ESPAGNE CITERIEURE (-197)', forceMilitaire: [2, 2], forceNavale: [0, 0],
-    spoliation: [-2, 2], revenusEtat: [-6, 1], developee: 0, type: TypeCarte.PROVINCE},
+    spoliation: [-2, 2], revenusEtat: [-6, 1], developpee: 0, type: TypeCarte.PROVINCE},
     { id: ProvinceId.ILLYRIE, nom: 'ILLYRIE (-167)', forceMilitaire: [2, 4], forceNavale: [0, 0],
-    spoliation: [-3, 0], revenusEtat: [-8, 0], developee: 0, type: TypeCarte.PROVINCE},
+    spoliation: [-3, 0], revenusEtat: [-8, 0], developpee: 0, type: TypeCarte.PROVINCE},
     { id: ProvinceId.GAULE_CISALPINE, nom: 'GAULE CISALPINE (-81)', forceMilitaire: [1, 2], forceNavale: [0, 0],
-    spoliation: [-1, 3], revenusEtat: [-1, -1], developee: 0, type: TypeCarte.PROVINCE},
+    spoliation: [-1, 3], revenusEtat: [-1, -1], developpee: 0, type: TypeCarte.PROVINCE},
 ];
 
 export enum GuerreId {

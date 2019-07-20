@@ -53,7 +53,7 @@ export class PhaseRevenusService {
               break;
           }
           if (test) {
-            const sp = this.romeService.getRandomNumber(6, 1, sen.province.spoliation[sen.province.developee]);
+            const sp = this.romeService.getRandomNumber(6, 1, sen.province.spoliation[sen.province.developpee]);
             console.log('Le sénateur ' + sen.nom + ' de la faction ' + faction.id
               + ' spolie la province ' + sen.province.nom + ' pour ' + sp + ' T');
             if (sp < 0) {
@@ -111,7 +111,7 @@ export class PhaseRevenusService {
   }
 
   public spoliationProvince(senateur: Senateur) {
-    const mod = senateur.province.spoliation[senateur.province.developee];
+    const mod = senateur.province.spoliation[senateur.province.developpee];
     const montant = this.romeService.getRandomNumber(6, 1, mod);
     let res = 'Province spoliée pour ' + montant + ' talent(s), ';
     if (montant > 0) {
@@ -129,5 +129,23 @@ export class PhaseRevenusService {
       this.romeService.majTresor(montant);
     }
     return res;
+  }
+
+  public developpementProvince() {
+    this.factions.forEach((f: Faction) => {
+      f.senateurs.forEach((sen: Senateur) => {
+        if (sen.province && sen.province.developpee === 0) {
+          console.log(sen.nom + ' tente de développer la province ' + sen.province.nom);
+          const de = this.romeService.getRandomNumber(6, 1, sen.corrompu ? 1 : 0);
+          console.log('Tirage = ' + de);
+          if (de >= 6) {
+            sen.province.developpee = 1;
+            // this.romeService.developpeProvince(sen.province);
+            sen.influence += 3;
+          }
+        }
+      });
+    });
+    this.factionService.majFactions(this.factions);
   }
 }

@@ -1,4 +1,11 @@
-<div  fxLayout="column" fxLayoutAlign="center start" class="carte"
-*ngFor="let f of forum">
-  <div>{{f.nom}}</div>
+<div fxLayout="column" fxLayoutAlign="center start" class="carte" *ngFor="let f of forum">
+  <div *ngIf="f.type === 'senateur'">
+    <div>{{f.nom}}</div>
+  </div>
+  <div *ngIf="f.type === 'province'">
+    <app-province [province]="f"></app-province>
+  </div>
+  <div *ngIf="f.type === 'concession'">
+    <app-concession [concessions]="f"></app-concession>
+  </div>
 </div>

@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
 import { SENATEURS, HOMMESDETAT } from '../data/senateurs.data';
-import { of, Observable, combineLatest, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
 import {
   Senateur,
   Carte,
-  Concession,
-  Intrigue,
   TypeCarte,
   Guerre,
   Province,
-  ChefEnnemi,
   Legion
 } from '../data.interface';
 import { CONCESSIONS } from '../data/concessions.data';
@@ -23,19 +19,19 @@ import { GUERRES, PROVINCES, CHEFS_ENNEMIS, GuerreId } from '../data/cartes.data
 export class RomeService {
   private _pioche: Carte[] = [];
   // private pioche: BehaviorSubject<Carte[]> = new BehaviorSubject<Carte[]>([]);
-  private chefsEnnemis: BehaviorSubject<Carte[]> = new BehaviorSubject<Carte[]>(
+  private _chefsEnnemis: BehaviorSubject<Carte[]> = new BehaviorSubject<Carte[]>(
     []
   );
-  private releveSenatoriale: BehaviorSubject<Carte[]> = new BehaviorSubject<
+  private _releveSenatoriale: BehaviorSubject<Carte[]> = new BehaviorSubject<
     Carte[]
   >([]);
-  private concessionsDetruites: BehaviorSubject<Carte[]> = new BehaviorSubject<
+  private _concessionsDetruites: BehaviorSubject<Carte[]> = new BehaviorSubject<
     Carte[]
   >([]);
-  private tresor: BehaviorSubject<number> = new BehaviorSubject<number>(100);
-  private forum: BehaviorSubject<Carte[]> = new BehaviorSubject<Carte[]>([]);
-  public provinces: Carte[] = [];
-  private forcesActives: BehaviorSubject<Legion[]> = new BehaviorSubject<Legion[]>([]);
+  private _tresor: BehaviorSubject<number> = new BehaviorSubject<number>(100);
+  private _forum: BehaviorSubject<Carte[]> = new BehaviorSubject<Carte[]>([]);
+  private _provinces: BehaviorSubject<Province[]> = new BehaviorSubject<Province[]>([]);
+  private _forcesActives: BehaviorSubject<Legion[]> = new BehaviorSubject<Legion[]>([]);
 
   constructor() {
     const senateurs: Senateur[] = SENATEURS.map((sen: Senateur) => {
@@ -59,6 +55,8 @@ export class RomeService {
     this._pioche = this._pioche.concat(CONCESSIONS);
     this._pioche = this._pioche.concat(CHEFS_ENNEMIS);
     this._pioche = this._pioche.concat(INTRIGUES);
+    this._provinces.next(PROVINCES);
+
     const guerres = GUERRES;
     let gi: number;
     const gp = guerres.find((g: Guerre, idx: number, array) => {
@@ -69,12 +67,11 @@ export class RomeService {
     guerres.splice(gi, 1);
     this._pioche = this._pioche.concat(guerres);
 
-    this.provinces = PROVINCES;
     const forcesActives: Legion[] = [];
     for (let index = 1; index < 5; index++) {
       forcesActives.push({ id: index, veteran: false });
     }
-    this.forcesActives.next(forcesActives);
+    this._forcesActives.next(forcesActives);
   }
 
   /**
@@ -97,12 +94,15 @@ export class RomeService {
   // TMP Tests
   public prendreProvince(): Province {
     let fc: Carte[];
+    const provinces = this._provinces.getValue();
     while (!fc) {
-      const idx = this.getRandomNumber(this.provinces.length) - 1;
-        fc = this.provinces.splice(idx, 1);
+      const idx = this.getRandomNumber(provinces.length) - 1;
+        fc = provinces.splice(idx, 1);
     }
+    this._provinces.next(provinces);
     return fc[0] as Province;
   }
+
   public prendreDansPioche(type?: TypeCarte): Carte {
     let fc: Carte[];
     while (!fc) {
@@ -119,52 +119,62 @@ export class RomeService {
   }
 
   public getTresor(): Observable<number> {
-    return this.tresor.asObservable();
+    return this._tresor.asObservable();
   }
   public majTresor(t: number) {
-    let tresor = this.tresor.getValue();
+    let tresor = this._tresor.getValue();
     tresor += t;
-    this.tresor.next(tresor);
+    this._tresor.next(tresor);
   }
-  public getProvinces(): Carte[] {
-    return this.provinces;
+  public getProvinces(): Observable<Carte[]> {
+    return this._provinces.asObservable();
+  }
+  public developpeProvince(province: Province) {
+    const provinces = this._provinces.getValue();
+    const pf: Province = provinces.find((p: Province) => {
+      return p.nom === province.nom;
+    });
+    if (pf) {
+      pf.developpee = 1;
+    }
+    this._provinces.next(provinces);
   }
   public getForcesActives(): Observable<Legion[]> {
-    return this.forcesActives.asObservable();
+    return this._forcesActives.asObservable();
   }
   public getChefsEnnemis(): Observable<Carte[]> {
-    return this.chefsEnnemis.asObservable();
+    return this._chefsEnnemis.asObservable();
   }
   public getReleveSenatoriale(): Observable<Carte[]> {
-    return this.releveSenatoriale.asObservable();
+    return this._releveSenatoriale.asObservable();
   }
   public getConcessionsDetruites(): Observable<Carte[]> {
-    return this.concessionsDetruites.asObservable();
+    return this._concessionsDetruites.asObservable();
   }
   public addConcessionDetruite(cd: Carte) {
-    const cds = this.concessionsDetruites.getValue();
+    const cds = this._concessionsDetruites.getValue();
     cds.push(cd);
 
-    this.concessionsDetruites.next(cds);
+    this._concessionsDetruites.next(cds);
   }
 
   public getForum(): Observable<Carte[]> {
-    return this.forum.asObservable();
+    return this._forum.asObservable();
   }
   public ajouterForum(c: Carte) {
-    const forum = this.forum.getValue();
+    const forum = this._forum.getValue();
     forum.push(c);
-    this.forum.next(forum);
+    this._forum.next(forum);
   }
   public prendreForum(c: Carte) {
-    const forum = this.forum.getValue();
+    const forum = this._forum.getValue();
     const idx = forum.findIndex((cf: Carte) => cf.nom === c.nom);
     forum.splice(idx, 1);
-    this.forum.next(forum);
+    this._forum.next(forum);
   }
 
   public senateurApparenteHE(he: Senateur): Senateur {
-    const trouve = this.forum.getValue().find((cf: Carte) => {
+    const trouve = this._forum.getValue().find((cf: Carte) => {
       if (cf.type === TypeCarte.SENATEUR) {
         const sen = cf as Senateur;
         return sen.in === he.in;

@@ -12,19 +12,27 @@
 <div *ngIf="etape === 2">
   <div fxLayout="row" fxLayoutGap="50px">
     <span>Redistribution</span>
+    <span>{{aRedistribuer}}</span>
     <button mat-raised-button color="primary" (click)="suivant()">Suivant</button>
   </div>
+  <div fxLayout="row">
   <div fxLayout="row" fxLayoutGap="20px">
     <div>Faction = {{ faction.tresor }}</div>
-    <button mat-stroked-button>-</button>
-    <button mat-stroked-button>+</button>
+    <button [disabled]="faction.tresor === 0" mat-stroked-button (click)="clickFaction(false)">-</button>
+    <button [disabled]="aRedistribuer === 0" mat-stroked-button (click)="clickFaction(true)">+</button>
   </div>
   <div *ngFor="let sen of senateurs" fxLayout="row" fxLayoutGap="20px">
     <div>{{ sen.nom }} = {{ sen.tresor }}</div>
-    <button mat-stroked-button>-</button>
-    <button mat-stroked-button>+</button>
+    <button [disabled]="sen.tresor === 0" mat-stroked-button (click)="clickSenateur(false, sen)">-</button>
+    <button [disabled]="aRedistribuer === 0" mat-stroked-button (click)="clickSenateur(true, sen)">+</button>
   </div>
 </div>
+</div>
 <div *ngIf="etape === 3">
+  <span>Développement provinces</span>
+  <button mat-raised-button (click)="developpementProvince()">Développer</button>
+
+</div>
+<div *ngIf="etape === 4">
   <span>Contributions</span>
 </div>
