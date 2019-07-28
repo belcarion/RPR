@@ -111,28 +111,36 @@ export class FactionService {
             sen.nom +
             ' de la faction ' +
             f.nom +
-            ' est mort.';
+            ' décède.';
           if (sen.concessions) {
             sen.concessions.forEach((concession: Carte) => {
+              msg += ' La concession ' + concession.nom + ' retourne au forum.';
               this.romeService.addConcessionDetruite(concession);
             });
           }
           if (sen.province) {
+              msg += ' La province ' + sen.province.nom + ' retourne au forum.';
+              sen.province.mandat = 0;
               this.romeService.ajouterForum(sen.province);
           }
-          this.romeService.ajouterForum(sen);
+          if (!sen.chef) {
+            this.romeService.addReleveSenatoriale(sen);
+          } else {
+            sen.chevaliers = 0;
+            sen.influence = 0;
+            sen.popularite = 0;
+            sen.rebelle = false;
+            sen.tresor = 0;
+            sen.charge = Charge.SANS;
+          }
         }
         this.updateVotes(f);
       });
     });
-    if (msg.length > 0) {
-      this.snackBar.open(msg, '', { duration: 2000, verticalPosition: 'top' });
-    } else {
-      this.snackBar.open('Aucun sénateur ne décède !', '', {
-        duration: 2000,
-        verticalPosition: 'top'
-      });
+    if (msg.length === 0) {
+      msg = 'Aucun sénateur ne décède !';
     }
+    this.snackBar.open(msg, 'OK', { duration: 9000, verticalPosition: 'top' });
   }
 
   public hommeDetatJouable(he: Senateur, faction: Faction): boolean {

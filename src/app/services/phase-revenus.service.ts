@@ -20,6 +20,7 @@ export class PhaseRevenusService {
   }
 
   public genereRevenus() {
+    this.romeService.majTresor(100);
     this.factions.forEach((faction: Faction) => {
       let revenus = 0;
       faction.senateurs.forEach((sen: Senateur) => {
@@ -37,7 +38,7 @@ export class PhaseRevenusService {
           revenus = 0;
         }
         // Spoliation des provinces
-        if (sen.province) {
+        if (faction.id !== TypeFaction.JOUEUR && sen.province) {
           let test = false;
           switch (faction.id) {
             case TypeFaction.POPULISTES:
@@ -54,6 +55,7 @@ export class PhaseRevenusService {
           }
           if (test) {
             const sp = this.romeService.getRandomNumber(6, 1, sen.province.spoliation[sen.province.developpee]);
+            sen.corrompu = true;
             console.log('Le sénateur ' + sen.nom + ' de la faction ' + faction.id
               + ' spolie la province ' + sen.province.nom + ' pour ' + sp + ' T');
             if (sp < 0) {
@@ -114,6 +116,7 @@ export class PhaseRevenusService {
     const mod = senateur.province.spoliation[senateur.province.developpee];
     const montant = this.romeService.getRandomNumber(6, 1, mod);
     let res = 'Province spoliée pour ' + montant + ' talent(s), ';
+    senateur.corrompu = true;
     if (montant > 0) {
       res += 'le sénateur gagne ' + montant + ' talent(s)';
       this.factionService.getFactionJoueur().senateurs.some((sen: Senateur) => {
@@ -134,7 +137,7 @@ export class PhaseRevenusService {
   public developpementProvince() {
     this.factions.forEach((f: Faction) => {
       f.senateurs.forEach((sen: Senateur) => {
-        if (sen.province && sen.province.developpee === 0) {
+        if (!sen.rebelle && sen.province && sen.province.developpee === 0) {
           console.log(sen.nom + ' tente de développer la province ' + sen.province.nom);
           const de = this.romeService.getRandomNumber(6, 1, sen.corrompu ? 1 : 0);
           console.log('Tirage = ' + de);
@@ -148,4 +151,6 @@ export class PhaseRevenusService {
     });
     this.factionService.majFactions(this.factions);
   }
+
+  public
 }

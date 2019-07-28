@@ -1,6 +1,10 @@
-<div fxLayout="column" fxLayoutAlign="center start" class="carte" *ngFor="let f of forum">
-  <div *ngIf="f.type === 'senateur'">
+<div fxLayout="column" fxLayoutAlign="center start" *ngFor="let f of forum">
+  <div *ngIf="f.type === 'guerre'" class="carte">
     <div>{{f.nom}}</div>
+  </div>
+  <div *ngIf="f.type === 'senateur'"  class="carte">
+    <div>{{f.nom}}</div>
+    <div>Elo: {{f.loyaute}}   Inf: {{f.influence}}   Mil: {{f.militaire}}   Trésor: {{f.tresor}}</div>
   </div>
   <div *ngIf="f.type === 'province'">
     <app-province [province]="f"></app-province>

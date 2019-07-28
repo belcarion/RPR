@@ -15,8 +15,10 @@
   <clr-dg-column [clrDgField]="'nom'">Nom</clr-dg-column>
   <clr-dg-column>Charge</clr-dg-column>
   <clr-dg-column [clrDgField]="'militaire'">Militaire</clr-dg-column>
+  <clr-dg-column>Loyauté</clr-dg-column>
   <clr-dg-column>Eloquence</clr-dg-column>
   <clr-dg-column>Influence</clr-dg-column>
+  <clr-dg-column>Popularité</clr-dg-column>
   <clr-dg-column>Trésor</clr-dg-column>
   <clr-dg-column>Chevaliers</clr-dg-column>
 
@@ -24,8 +26,10 @@
     <clr-dg-cell [ngClass]="{ 'chef': senateur.chef, 'corrompu': senateur.corrompu }">{{ senateur.nom }}</clr-dg-cell>
     <clr-dg-cell>{{ senateur.charge }}</clr-dg-cell>
     <clr-dg-cell>{{ senateur.militaire }}</clr-dg-cell>
+    <clr-dg-cell>{{ senateur.loyaute }}</clr-dg-cell>
     <clr-dg-cell>{{ senateur.eloquence }}</clr-dg-cell>
     <clr-dg-cell>{{ senateur.influence }}</clr-dg-cell>
+    <clr-dg-cell>{{ senateur.popularite }}</clr-dg-cell>
     <clr-dg-cell>{{ senateur.tresor }}</clr-dg-cell>
     <clr-dg-cell>{{ senateur.chevaliers }}</clr-dg-cell>
     <clr-dg-row-detail *clrIfExpanded="true">

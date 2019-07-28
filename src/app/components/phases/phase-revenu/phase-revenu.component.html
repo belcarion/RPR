@@ -16,23 +16,28 @@
     <button mat-raised-button color="primary" (click)="suivant()">Suivant</button>
   </div>
   <div fxLayout="row">
-  <div fxLayout="row" fxLayoutGap="20px">
-    <div>Faction = {{ faction.tresor }}</div>
-    <button [disabled]="faction.tresor === 0" mat-stroked-button (click)="clickFaction(false)">-</button>
-    <button [disabled]="aRedistribuer === 0" mat-stroked-button (click)="clickFaction(true)">+</button>
+    <div fxLayout="row" fxLayoutGap="20px">
+      <div>Faction = {{ faction.tresor }}</div>
+      <button [disabled]="faction.tresor === 0" mat-stroked-button (click)="clickFaction(false)">-</button>
+      <button [disabled]="aRedistribuer === 0" mat-stroked-button (click)="clickFaction(true)">+</button>
+    </div>
+    <div *ngFor="let sen of senateurs" fxLayout="row" fxLayoutGap="20px">
+      <div>{{ sen.nom }} = {{ sen.tresor }}</div>
+      <button [disabled]="sen.tresor === 0" mat-stroked-button (click)="redistribution(false, sen)">-</button>
+      <button [disabled]="aRedistribuer === 0" mat-stroked-button (click)="redistribution(true, sen)">+</button>
+    </div>
   </div>
-  <div *ngFor="let sen of senateurs" fxLayout="row" fxLayoutGap="20px">
-    <div>{{ sen.nom }} = {{ sen.tresor }}</div>
-    <button [disabled]="sen.tresor === 0" mat-stroked-button (click)="clickSenateur(false, sen)">-</button>
-    <button [disabled]="aRedistribuer === 0" mat-stroked-button (click)="clickSenateur(true, sen)">+</button>
-  </div>
-</div>
 </div>
 <div *ngIf="etape === 3">
   <span>Développement provinces</span>
   <button mat-raised-button (click)="developpementProvince()">Développer</button>
-
+  <button mat-raised-button color="primary" (click)="suivant()">Suivant</button>
 </div>
 <div *ngIf="etape === 4">
   <span>Contributions</span>
+  <div *ngFor="let sen of senateurs" fxLayout="row" fxLayoutGap="20px">
+    <div>{{ sen.nom }} = {{ sen.tresor }}</div>
+    <button [disabled]="sen.tresor < 10" mat-stroked-button (click)="contributions(10, sen)">10</button>
+  </div>
+  <button mat-raised-button color="primary" (click)="suivant()">Suivant</button>
 </div>

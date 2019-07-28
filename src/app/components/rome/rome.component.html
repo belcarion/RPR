@@ -7,11 +7,11 @@
   </div>
   <span>Armée</span>
   <div fxLayout="row" fxLayoutGap="20px" class="rome1">
-      <span>Forces Actives</span>
-      <span>{{ forcesActives.length }}</span>
+    <span>Forces Actives</span>
+    <span>{{ forcesActives.length }}</span>
 
   </div>
-<div fxLayout="column">
+  <div fxLayout="column">
     <span>Forum</span>
     <app-forum [forum]="forum"></app-forum>
     <span>Guerres actives</span>
@@ -20,6 +20,10 @@
     <span>Guerres inactives</span>
     <span>Chefs ennemis</span>
     <span>Relève sénatoriale</span>
+    <div *ngFor="let sen of releveSenatoriale" class="carte">
+      <div>{{sen.nom}}</div>
+      <div>Elo: {{sen.loyaute}} Inf: {{sen.influence}} Mil: {{sen.militaire}} Trésor: {{sen.tresor}}</div>
+    </div>
     <span>Concessions détruites</span>
     <app-concession [concessions]="concessionsDetruites"></app-concession>
-</div>
+  </div>

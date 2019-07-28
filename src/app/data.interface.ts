@@ -71,6 +71,7 @@ export interface Senateur extends Carte {
   ancienConsul?: boolean;
   concessions?: Concession[];
   province?: Province;
+  rebelle?: boolean;
 }
 export interface Concession extends Carte {
   revenu: number;

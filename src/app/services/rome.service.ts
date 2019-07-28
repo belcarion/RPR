@@ -7,7 +7,8 @@ import {
   TypeCarte,
   Guerre,
   Province,
-  Legion
+  Legion,
+  Charge
 } from '../data.interface';
 import { CONCESSIONS } from '../data/concessions.data';
 import { INTRIGUES } from '../data/intrigues.data';
@@ -38,8 +39,11 @@ export class RomeService {
       sen.concessions = [];
       sen.chevaliers = 0;
       sen.tresor = 0;
+      sen.popularite = 0;
       sen.corrompu = false;
       sen.ancienConsul = false;
+      sen.rebelle = false;
+      sen.charge = Charge.SANS;
       return sen;
     });
     const hommesEtat: Senateur[] = HOMMESDETAT.map((sen: Senateur) => {
@@ -100,7 +104,9 @@ export class RomeService {
         fc = provinces.splice(idx, 1);
     }
     this._provinces.next(provinces);
-    return fc[0] as Province;
+    const prov = fc[0] as Province;
+    prov.mandat = 3;
+    return prov;
   }
 
   public prendreDansPioche(type?: TypeCarte): Carte {
@@ -148,13 +154,17 @@ export class RomeService {
   public getReleveSenatoriale(): Observable<Carte[]> {
     return this._releveSenatoriale.asObservable();
   }
+  public addReleveSenatoriale(c: Carte) {
+    const rs = this._releveSenatoriale.getValue();
+    rs.push(c);
+    this._releveSenatoriale.next(rs);
+  }
   public getConcessionsDetruites(): Observable<Carte[]> {
     return this._concessionsDetruites.asObservable();
   }
   public addConcessionDetruite(cd: Carte) {
     const cds = this._concessionsDetruites.getValue();
     cds.push(cd);
-
     this._concessionsDetruites.next(cds);
   }
 
@@ -184,4 +194,5 @@ export class RomeService {
     });
     return trouve as Senateur;
   }
+
 }

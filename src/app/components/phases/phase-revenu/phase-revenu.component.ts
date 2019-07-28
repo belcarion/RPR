@@ -3,6 +3,7 @@ import { FactionService } from 'src/app/services/faction.service';
 import { Faction, Senateur } from 'src/app/data.interface';
 import { PhaseRevenusService } from 'src/app/services/phase-revenus.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { RomeService } from 'src/app/services/rome.service';
 
 // spoliation/développement province
 // redistribution
@@ -26,7 +27,8 @@ export class PhaseRevenuComponent implements OnInit {
 
   constructor(
     private factionService: FactionService,
-    private phaseRevenusService: PhaseRevenusService
+    private phaseRevenusService: PhaseRevenusService,
+    private romeService: RomeService
   ) { }
 
   ngOnInit() {
@@ -67,7 +69,7 @@ export class PhaseRevenuComponent implements OnInit {
       this.aRedistribuer--;
     }
   }
-  public clickSenateur(plus: boolean, senateur: Senateur) {
+  public redistribution(plus: boolean, senateur: Senateur) {
     if (!plus) {
       senateur.tresor--;
       this.aRedistribuer++;
@@ -79,5 +81,10 @@ export class PhaseRevenuComponent implements OnInit {
 
   public developpementProvince() {
     this.phaseRevenusService.developpementProvince();
+  }
+
+  public contribution(v: number, senateur: Senateur) {
+      senateur.tresor -= v;
+      this.romeService.majTresor(v);
   }
 }
