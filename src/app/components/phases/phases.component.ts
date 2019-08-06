@@ -38,24 +38,26 @@ export class PhasesComponent implements OnInit {
         this.phase = Phase.REVENU;
         break;
       case Phase.REVENU:
-        this.phase = Phase.FORUM;
-        break;
-      case Phase.FORUM:
-        this.phase = Phase.PLEBE;
-        break;
-      case Phase.PLEBE:
-        this.phase = Phase.SENAT;
-        break;
-      case Phase.SENAT:
-        this.phase = Phase.COMBAT;
-        break;
-      case Phase.COMBAT:
-        this.phase = Phase.GUERRE_CIVILE;
-        break;
-      case Phase.GUERRE_CIVILE:
         this.phase = Phase.MORTALITE;
         this.tour++;
+        // this.phase = Phase.FORUM;
         break;
+      // case Phase.FORUM:
+      //   this.phase = Phase.PLEBE;
+      //   break;
+      // case Phase.PLEBE:
+      //   this.phase = Phase.SENAT;
+      //   break;
+      // case Phase.SENAT:
+      //   this.phase = Phase.COMBAT;
+      //   break;
+      // case Phase.COMBAT:
+      //   this.phase = Phase.GUERRE_CIVILE;
+      //   break;
+      // case Phase.GUERRE_CIVILE:
+      //   this.phase = Phase.MORTALITE;
+      //   this.tour++;
+      //   break;
       default:
         break;
     }

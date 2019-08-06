@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Carte } from 'src/app/data.interface';
+import { Senateur } from 'src/app/data.interface';
 
 @Component({
   selector: 'app-forum',
@@ -7,7 +7,7 @@ import { Carte } from 'src/app/data.interface';
   styleUrls: ['./forum.component.scss']
 })
 export class ForumComponent implements OnInit {
-@Input() forum: Carte[];
+@Input() forum: Senateur[];
 
   constructor() { }
 

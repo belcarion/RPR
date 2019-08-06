@@ -1,6 +1,9 @@
 <div fxLayout="row" fxLayoutGap="50px">
-  <span class="phases">Tour {{tour}}</span>
-  <span class="phases">{{phase}}</span>
-  <app-phase-mortalite *ngIf="phase === 'Phase de mortalité'" (fin)="finPhase('Phase de mortalité')"></app-phase-mortalite>
+  <div fxLayout="column">
+    <span class="phases">Tour {{tour}}</span>
+    <span class="phases">{{phase}}</span>
+  </div>
+  <app-phase-mortalite *ngIf="phase === 'Phase de mortalité'" (fin)="finPhase('Phase de mortalité')">
+  </app-phase-mortalite>
   <app-phase-revenu *ngIf="phase === 'Phase de revenu'" (fin)="finPhase('Phase de revenu')"></app-phase-revenu>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Carte, Legion } from 'src/app/data.interface';
+import { Carte, Legion, Escadre, Senateur, Concession } from 'src/app/data.interface';
 import { RomeService } from 'src/app/services/rome.service';
 import { combineLatest, BehaviorSubject } from 'rxjs';
 
@@ -11,10 +11,11 @@ import { combineLatest, BehaviorSubject } from 'rxjs';
 export class RomeComponent implements OnInit {
   public tresor = 0;
   public agitationSociale = 0;
-  public forcesActives: Legion[];
+  public legions: Legion[];
+  public escadres: Escadre[];
   public chefsEnnemis: Carte[] = [];
-  public releveSenatoriale: Carte[] = [];
-  public concessionsDetruites: Carte[] = [];
+  public releveSenatoriale: Senateur[] = [];
+  public concessionsDetruites: Concession[] = [];
   public forum: Carte[] = [];
 
   constructor(private romeService: RomeService) {
@@ -24,22 +25,25 @@ export class RomeComponent implements OnInit {
       this.romeService.getConcessionsDetruites(),
       this.romeService.getForum(),
       this.romeService.getTresor(),
-      this.romeService.getForcesActives()
+      this.romeService.getLegionsActives(),
+      romeService.getEscadresActives()
     ]).subscribe(
-      ([ce, rs, cd, forum, tresor, fa]: [
+      ([ce, rs, cd, forum, tresor, l, e]: [
         Carte[],
-        Carte[],
-        Carte[],
+        Senateur[],
+        Concession[],
         Carte[],
         number,
-        Legion[]
+        Legion[],
+        Escadre[]
       ]) => {
         this.chefsEnnemis = ce;
         this.releveSenatoriale = rs;
         this.concessionsDetruites = cd;
         this.forum = forum;
         this.tresor = tresor;
-        this.forcesActives = fa;
+        this.legions = l;
+        this.escadres = e;
       }
     );
   }

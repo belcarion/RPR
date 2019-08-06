@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PhaseMortaliteService } from 'src/app/services/phase-mortalite.service';
-import { FactionService } from 'src/app/services/faction.service';
 
 @Component({
   selector: 'app-phase-mortalite',
@@ -9,14 +8,14 @@ import { FactionService } from 'src/app/services/faction.service';
 })
 export class PhaseMortaliteComponent implements OnInit {
   @Output() fin: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public result: string[] = [];
 
   constructor(
-    private factionService: FactionService,
     private phaseMortaliteService: PhaseMortaliteService
   ) { }
 
   ngOnInit() {
-    this.phaseMortaliteService.resolutionMortalite();
+    this.result = this.phaseMortaliteService.resolutionMortalite();
   }
 
   public suivant() {

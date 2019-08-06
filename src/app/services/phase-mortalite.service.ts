@@ -27,9 +27,9 @@ export class PhaseMortaliteService {
     }
   }
 
-  public resolutionMortalite() {
+  public resolutionMortalite(): string[] {
     const senateursMorts = this.testMortalite();
     console.log("sénateurs morts = ", JSON.stringify(senateursMorts));
-    this.factionService.retireSenateurMort(senateursMorts);
+    return this.factionService.retireSenateurMort(senateursMorts);
   }
 }

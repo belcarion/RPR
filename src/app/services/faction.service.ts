@@ -43,10 +43,12 @@ export class FactionService {
     return mil;
   }
 
-  private updateVotes(f: Faction) {
+  public updateVotes(f: Faction) {
     let votes = 0;
     f.senateurs.forEach((s: Senateur) => {
-      votes = votes + s.eloquence + s.chevaliers;
+      if (!s.province) {
+        votes = votes + s.eloquence + s.chevaliers;
+      }
     });
     f.votes = votes;
   }
@@ -94,9 +96,9 @@ export class FactionService {
     }
   }
 
-  public retireSenateurMort(senateursMorts: number[]) {
+  public retireSenateurMort(senateursMorts: number[]): string[] {
     const factions = this._factions.getValue();
-    let msg = '';
+    const result = [];
     senateursMorts.forEach((sin: number) => {
       factions.forEach((f: Faction) => {
         const sen = f.senateurs.find((s: Senateur) => {
@@ -105,9 +107,7 @@ export class FactionService {
         if (sen) {
           const sens = f.senateurs.filter((s: Senateur) => s.in !== sen.in);
           f.senateurs = sens;
-          msg =
-            msg +
-            'Le sénateur ' +
+          let msg = 'Le sénateur ' +
             sen.nom +
             ' de la faction ' +
             f.nom +
@@ -133,14 +133,16 @@ export class FactionService {
             sen.tresor = 0;
             sen.charge = Charge.SANS;
           }
+          result.push(msg);
         }
         this.updateVotes(f);
       });
     });
-    if (msg.length === 0) {
-      msg = 'Aucun sénateur ne décède !';
+    if (result.length === 0) {
+      result.push('Aucun sénateur ne décède !');
     }
-    this.snackBar.open(msg, 'OK', { duration: 9000, verticalPosition: 'top' });
+    // this.snackBar.open(msg, 'OK', { duration: 9000, verticalPosition: 'top' });
+    return result;
   }
 
   public hommeDetatJouable(he: Senateur, faction: Faction): boolean {
@@ -362,5 +364,24 @@ export class FactionService {
       cdf.chef = true;
      cdf.province = this.romeService.prendreProvince();
     }
+  }
+
+  public retourGouverneurs(): string[] {
+    const msg = [];
+    const factions: Faction[] = this._factions.getValue();
+    factions.forEach((faction: Faction) => {
+      faction.senateurs.forEach((sen: Senateur) => {
+        if (sen.province && sen.province.mandat > 1) {
+          sen.province.mandat -= 1;
+        } else if (sen.province && sen.province.mandat === 1) {
+          msg.push('Le sénateur ' + sen.nom + ' rend sa province ' + sen.province.nom + ' et retourne à Rome');
+          sen.province.mandat -= 1;
+          this.romeService.ajouterForum(sen.province);
+          sen.province = undefined;
+          this.updateVotes(faction);
+        }
+      });
+    });
+    return msg;
   }
 }

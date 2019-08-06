@@ -110,4 +110,9 @@ export interface ChefEnnemi extends Carte {
 export interface Legion {
   id: number;
   veteran: boolean;
+  rebelle: boolean;
+}
+export interface Escadre {
+  id: number;
+  rebelle: boolean;
 }

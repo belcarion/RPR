@@ -53,10 +53,28 @@ export class PhaseRevenuComponent implements OnInit {
   }
 
   public suivant() {
-    if (this.etape < 5) {
-      this.etape++;
-    } else {
-      this.fin.emit(true);
+    switch (this.etape) {
+      case 1:
+        this.etape++;
+        break;
+      case 2:
+        this.result = this.phaseRevenusService.developpementProvince();
+        this.etape++;
+        break;
+      case 3:
+        this.etape++;
+        break;
+      case 4:
+        this.result = this.romeService.dettes();
+        this.etape++;
+        break;
+      case 5:
+        this.result = this.factionService.retourGouverneurs();
+        this.etape++;
+        break;
+      default:
+        this.fin.emit(true);
+        break;
     }
   }
 
@@ -79,12 +97,23 @@ export class PhaseRevenuComponent implements OnInit {
     }
   }
 
-  public developpementProvince() {
-    this.phaseRevenusService.developpementProvince();
+  public contribution(v: number, senateur: Senateur) {
+    senateur.tresor -= v;
+    switch (v) {
+      case 10:
+        senateur.popularite += 1;
+        break;
+      case 25:
+        senateur.popularite += 3;
+        break;
+      case 50:
+        senateur.popularite += 7;
+        break;
+
+      default:
+        break;
+    }
+    this.romeService.majTresor(v);
   }
 
-  public contribution(v: number, senateur: Senateur) {
-      senateur.tresor -= v;
-      this.romeService.majTresor(v);
-  }
 }

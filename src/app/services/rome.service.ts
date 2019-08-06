@@ -8,7 +8,8 @@ import {
   Guerre,
   Province,
   Legion,
-  Charge
+  Charge,
+  Escadre
 } from '../data.interface';
 import { CONCESSIONS } from '../data/concessions.data';
 import { INTRIGUES } from '../data/intrigues.data';
@@ -32,7 +33,10 @@ export class RomeService {
   private _tresor: BehaviorSubject<number> = new BehaviorSubject<number>(100);
   private _forum: BehaviorSubject<Carte[]> = new BehaviorSubject<Carte[]>([]);
   private _provinces: BehaviorSubject<Province[]> = new BehaviorSubject<Province[]>([]);
-  private _forcesActives: BehaviorSubject<Legion[]> = new BehaviorSubject<Legion[]>([]);
+  private _legionsActives: BehaviorSubject<Legion[]> = new BehaviorSubject<Legion[]>([]);
+  private _escadresActives: BehaviorSubject<Escadre[]> = new BehaviorSubject<Escadre[]>([]);
+  private _guerresActives: BehaviorSubject<Guerre[]> = new BehaviorSubject<Guerre[]>([]);
+
 
   constructor() {
     const senateurs: Senateur[] = SENATEURS.map((sen: Senateur) => {
@@ -71,11 +75,11 @@ export class RomeService {
     guerres.splice(gi, 1);
     this._pioche = this._pioche.concat(guerres);
 
-    const forcesActives: Legion[] = [];
+    const legionsActives: Legion[] = [];
     for (let index = 1; index < 5; index++) {
-      forcesActives.push({ id: index, veteran: false });
+      legionsActives.push({ id: index, veteran: false, rebelle: false });
     }
-    this._forcesActives.next(forcesActives);
+    this._legionsActives.next(legionsActives);
   }
 
   /**
@@ -145,8 +149,11 @@ export class RomeService {
     }
     this._provinces.next(provinces);
   }
-  public getForcesActives(): Observable<Legion[]> {
-    return this._forcesActives.asObservable();
+  public getLegionsActives(): Observable<Legion[]> {
+    return this._legionsActives.asObservable();
+  }
+  public getEscadresActives(): Observable<Escadre[]> {
+    return this._escadresActives.asObservable();
   }
   public getChefsEnnemis(): Observable<Carte[]> {
     return this._chefsEnnemis.asObservable();
@@ -195,4 +202,15 @@ export class RomeService {
     return trouve as Senateur;
   }
 
+  public dettes(): string[] {
+    const cga = -20 * this._guerresActives.getValue().length;
+    const la = this._legionsActives.getValue().filter((l: Legion) => !l.rebelle).length;
+    const ea = this._escadresActives.getValue().filter((e: Escadre) => !e.rebelle).length;
+    const cfa = -2 * (la + ea);
+    this.majTresor(cga);
+    this.majTresor(cfa);
+    // lois agraires*
+    return ['Rome paie ' + cga + ' T pour les guerres actives, '
+    + cfa + ' T pour les forces non rebelles.'];
+  }
 }

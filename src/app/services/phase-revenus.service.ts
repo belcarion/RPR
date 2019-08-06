@@ -134,7 +134,8 @@ export class PhaseRevenusService {
     return res;
   }
 
-  public developpementProvince() {
+  public developpementProvince(): string[] {
+    const msg = [];
     this.factions.forEach((f: Faction) => {
       f.senateurs.forEach((sen: Senateur) => {
         if (!sen.rebelle && sen.province && sen.province.developpee === 0) {
@@ -142,15 +143,16 @@ export class PhaseRevenusService {
           const de = this.romeService.getRandomNumber(6, 1, sen.corrompu ? 1 : 0);
           console.log('Tirage = ' + de);
           if (de >= 6) {
+            msg.push('Le sénateur ' + sen.nom + ' développe la province ' + sen.province.nom + '.');
             sen.province.developpee = 1;
-            // this.romeService.developpeProvince(sen.province);
             sen.influence += 3;
           }
         }
       });
     });
     this.factionService.majFactions(this.factions);
+    return msg;
   }
 
-  public
+
 }
