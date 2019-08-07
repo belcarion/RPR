@@ -38,9 +38,8 @@ export class PhasesComponent implements OnInit {
         this.phase = Phase.REVENU;
         break;
       case Phase.REVENU:
-        this.phase = Phase.MORTALITE;
+        this.phase = Phase.FORUM;
         this.tour++;
-        // this.phase = Phase.FORUM;
         break;
       // case Phase.FORUM:
       //   this.phase = Phase.PLEBE;

@@ -21,9 +21,9 @@ export class PhaseRevenuComponent implements OnInit {
   public gouverneurs: Senateur[];
   public spoliation: number;
   public result: string[] = [];
-
-  public aRedistribuer = 0;
   public senateurs: Senateur[];
+  public senateursNonRebelles: Senateur[];
+  private contribution: number;
 
   constructor(
     private factionService: FactionService,
@@ -35,6 +35,7 @@ export class PhaseRevenuComponent implements OnInit {
     this.phaseRevenusService.genereRevenus();
     this.faction = this.factionService.getFactionJoueur();
     this.senateurs = this.faction.senateurs;
+    this.senateursNonRebelles = this.faction.senateurs.filter((s: Senateur) => !s.rebelle);
     this.gouverneurs = this.faction.senateurs.filter((sen: Senateur) => {
       return sen.province !== undefined;
     });
@@ -62,6 +63,7 @@ export class PhaseRevenuComponent implements OnInit {
         this.etape++;
         break;
       case 3:
+        this.result = [];
         this.etape++;
         break;
       case 4:
@@ -81,39 +83,24 @@ export class PhaseRevenuComponent implements OnInit {
   public clickFaction(plus: boolean) {
     if (!plus) {
       this.faction.tresor--;
-      this.aRedistribuer++;
     } else {
       this.faction.tresor++;
-      this.aRedistribuer--;
     }
   }
   public redistribution(plus: boolean, senateur: Senateur) {
     if (!plus) {
       senateur.tresor--;
-      this.aRedistribuer++;
+      this.faction.tresor++;
     } else {
       senateur.tresor++;
-      this.aRedistribuer--;
+      this.faction.tresor--;
     }
   }
 
-  public contribution(v: number, senateur: Senateur) {
-    senateur.tresor -= v;
-    switch (v) {
-      case 10:
-        senateur.popularite += 1;
-        break;
-      case 25:
-        senateur.popularite += 3;
-        break;
-      case 50:
-        senateur.popularite += 7;
-        break;
-
-      default:
-        break;
-    }
-    this.romeService.majTresor(v);
+  public contributionJoueur(v: number, senateur: Senateur) {
+    this.contribution = v;
+    this.phaseRevenusService.contribution(v, senateur);
+    this.result = this.phaseRevenusService.contributionsNeutres(this.contribution);
   }
 
 }

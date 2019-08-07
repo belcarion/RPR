@@ -21,6 +21,7 @@ import { PhasesComponent } from './components/phases/phases.component';
 import { ForumComponent } from './components/forum/forum.component';
 import { PhaseRevenuComponent } from './components/phases/phase-revenu/phase-revenu.component';
 import { PhaseMortaliteComponent } from './components/phases/phase-mortalite/phase-mortalite.component';
+import { PhaseForumComponent } from './components/phases/phase-forum/phase-forum.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { PhaseMortaliteComponent } from './components/phases/phase-mortalite/pha
     PhasesComponent,
     ForumComponent,
     PhaseRevenuComponent,
-    PhaseMortaliteComponent
+    PhaseMortaliteComponent,
+    PhaseForumComponent
   ],
   imports: [
     BrowserModule,

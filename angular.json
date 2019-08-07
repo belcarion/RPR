@@ -29,7 +29,7 @@
           "spec": false
         },
         "@schematics/angular:service": {
-          "spec": false
+          "spec": true
         }
       },
       "architect": {

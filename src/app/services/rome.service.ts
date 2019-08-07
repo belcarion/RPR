@@ -54,8 +54,11 @@ export class RomeService {
       sen.concessions = [];
       sen.chevaliers = 0;
       sen.tresor = 0;
+      sen.popularite = 0;
       sen.corrompu = false;
       sen.ancienConsul = false;
+      sen.rebelle = false;
+      sen.charge = Charge.SANS;
       return sen;
     });
     this._pioche = this._pioche.concat(senateurs);

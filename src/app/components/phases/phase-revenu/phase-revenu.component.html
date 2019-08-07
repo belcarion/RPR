@@ -15,18 +15,15 @@
   <div *ngIf="etape === 2">
     <div fxLayout="row" fxLayoutGap="50px">
       <span>Redistribution</span>
-      <span>{{aRedistribuer}}</span>
     </div>
     <div fxLayout="column">
       <div fxLayout="row" fxLayoutGap="20px">
         <div>Faction = {{ faction.tresor }}</div>
-        <button [disabled]="faction.tresor === 0" mat-stroked-button (click)="clickFaction(false)">-</button>
-        <button [disabled]="aRedistribuer === 0" mat-stroked-button (click)="clickFaction(true)">+</button>
       </div>
       <div *ngFor="let sen of senateurs" fxLayout="row" fxLayoutGap="20px">
         <div>{{ sen.nom }} = {{ sen.tresor }}</div>
         <button [disabled]="sen.tresor === 0" mat-stroked-button (click)="redistribution(false, sen)">-</button>
-        <button [disabled]="aRedistribuer === 0" mat-stroked-button (click)="redistribution(true, sen)">+</button>
+        <button [disabled]="faction.tresor === 0" mat-stroked-button (click)="redistribution(true, sen)">+</button>
       </div>
     </div>
   </div>
@@ -38,10 +35,15 @@
   </div>
   <div *ngIf="etape === 4">
     <span>Contributions</span>
-    <div *ngFor="let sen of senateurs" fxLayout="row" fxLayoutGap="20px">
+    <div *ngFor="let sen of senateursNonRebelles" fxLayout="row" fxLayoutGap="20px">
       <div>{{ sen.nom }} = {{ sen.tresor }}</div>
-      <button [disabled]="sen.tresor < 10" mat-stroked-button (click)="contribution(10, sen)">10</button>
-    </div>
+      <button [disabled]="sen.tresor < 10" mat-stroked-button (click)="contributionJoueur(10, sen)">10</button>
+      <button [disabled]="sen.tresor < 25" mat-stroked-button (click)="contributionJoueur(25, sen)">25</button>
+      <button [disabled]="sen.tresor < 50" mat-stroked-button (click)="contributionJoueur(50, sen)">50</button>
+      </div>
+      <div *ngFor="let res of result">
+        <span>{{ res }}</span>
+      </div>
   </div>
   <div *ngIf="etape === 5">
     <span>Dettes de Rome</span>

@@ -131,6 +131,7 @@ export class FactionService {
             sen.popularite = 0;
             sen.rebelle = false;
             sen.tresor = 0;
+            sen.corrompu = false;
             sen.charge = Charge.SANS;
           }
           result.push(msg);
@@ -383,5 +384,26 @@ export class FactionService {
       });
     });
     return msg;
+  }
+
+  public majSenateur(senateur: Senateur) {
+    const factions: Faction[] = this._factions.getValue();
+    factions.some((f: Faction) => {
+      return f.senateurs.some((s: Senateur) => {
+        if (s.nom === senateur.nom) {
+          s.popularite = senateur.popularite;
+          s.province = senateur.province;
+          s.rebelle = senateur.rebelle;
+          s.corrompu = senateur.corrompu;
+          s.tresor = senateur.tresor;
+          s.ancienConsul = senateur.ancienConsul;
+          s.charge = senateur.charge;
+          s.chevaliers = senateur.chevaliers;
+          return true;
+        }
+        return false;
+      });
+    });
+    this._factions.next(factions);
   }
 }

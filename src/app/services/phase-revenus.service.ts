@@ -34,7 +34,7 @@ export class PhaseRevenusService {
           });
         }
         if (faction.id === TypeFaction.JOUEUR) {
-          sen.tresor = revenus;
+          sen.tresor += revenus;
           revenus = 0;
         }
         // Spoliation des provinces
@@ -119,14 +119,19 @@ export class PhaseRevenusService {
     senateur.corrompu = true;
     if (montant > 0) {
       res += 'le sénateur gagne ' + montant + ' talent(s)';
-      this.factionService.getFactionJoueur().senateurs.some((sen: Senateur) => {
-        if (sen.nom === senateur.nom) {
-          sen.tresor += montant;
-          return true;
-        } else {
-          return false;
+      this.factions.forEach((f: Faction) => {
+        if (f.id === TypeFaction.JOUEUR) {
+          f.senateurs.some((sen: Senateur) => {
+            if (sen.nom === senateur.nom) {
+              sen.tresor += montant;
+              return true;
+            } else {
+              return false;
+            }
+          });
         }
       });
+      this.factionService.majFactions(this.factions);
     } else {
       res += 'Rome paye ' + montant + ' talent(s)';
       this.romeService.majTresor(montant);
@@ -154,5 +159,70 @@ export class PhaseRevenusService {
     return msg;
   }
 
+  public contribution(v: number, senateur: Senateur) {
+    senateur.tresor -= v;
+    switch (v) {
+      case 10:
+        senateur.popularite += 1;
+        break;
+      case 25:
+        senateur.popularite += 3;
+        break;
+      case 50:
+        senateur.popularite += 7;
+        break;
+      default:
+        break;
+    }
+    this.factionService.majSenateur(senateur);
+    this.romeService.majTresor(v);
+  }
 
+  public contributionsNeutres(c: number): string[] {
+    const msg = [];
+    this.factions.forEach((f: Faction) => {
+      if (f.id === TypeFaction.CONSERVATEURS || f.id === TypeFaction.IMPERIALISTES) {
+        f.senateurs.forEach((sen: Senateur) => {
+          let pop = 0;
+          // un neutre fera toujours une contribution
+          // s’il le peut et si cela lui permet d’avoir 35 ou plus
+          // en influence
+          const manqueInf = 35 - sen.influence;
+          if (manqueInf === 1 && sen.tresor >= 10) {
+            pop += 1;
+            sen.tresor -= 10;
+          } else if (manqueInf <= 3 && sen.tresor >= 25) {
+           pop += 3;
+           sen.tresor -= 25;
+        } else if (manqueInf === 7 && sen.tresor >= 50) {
+          pop += 7;
+          sen.tresor -= 50;
+        } else if (sen.tresor >= c) {
+            switch (c) {
+              case 10:
+                pop = 1;
+                break;
+              case 25:
+                pop = 3;
+                break;
+              case 50:
+                pop = 7;
+                break;
+              default:
+                break;
+            }
+            sen.tresor -= c;
+          }
+          if (pop > 0) {
+            sen.popularite += pop;
+            this.factionService.majSenateur(sen);
+            this.romeService.majTresor(c);
+            msg.push('Le sénateur ' + sen.nom + ' de la faction ' + f.nom
+            + ' contribue au trésor de Rome pour ' + c + 'talents.');
+          }
+        });
+      }
+    });
+    return msg;
+  }
 }
