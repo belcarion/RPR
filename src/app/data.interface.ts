@@ -116,3 +116,8 @@ export interface Escadre {
   id: number;
   rebelle: boolean;
 }
+export interface SenateurVulnerable {
+  senateur: Senateur;
+  tresorFaction: number;
+  votesFaction: number;
+}

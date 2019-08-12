@@ -24,8 +24,8 @@ export class RomeService {
   private _chefsEnnemis: BehaviorSubject<Carte[]> = new BehaviorSubject<Carte[]>(
     []
   );
-  private _releveSenatoriale: BehaviorSubject<Carte[]> = new BehaviorSubject<
-    Carte[]
+  private _releveSenatoriale: BehaviorSubject<Senateur[]> = new BehaviorSubject<
+    Senateur[]
   >([]);
   private _concessionsDetruites: BehaviorSubject<Carte[]> = new BehaviorSubject<
     Carte[]
@@ -161,10 +161,10 @@ export class RomeService {
   public getChefsEnnemis(): Observable<Carte[]> {
     return this._chefsEnnemis.asObservable();
   }
-  public getReleveSenatoriale(): Observable<Carte[]> {
+  public getReleveSenatoriale(): Observable<Senateur[]> {
     return this._releveSenatoriale.asObservable();
   }
-  public addReleveSenatoriale(c: Carte) {
+  public addReleveSenatoriale(c: Senateur) {
     const rs = this._releveSenatoriale.getValue();
     rs.push(c);
     this._releveSenatoriale.next(rs);

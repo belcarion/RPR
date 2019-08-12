@@ -9,6 +9,7 @@ import { Concession } from 'src/app/data.interface';
 export class ConcessionComponent implements OnInit {
 
   @Input() concessions: Concession[];
+  @Input() displayH: boolean;
 
   constructor() { }
 

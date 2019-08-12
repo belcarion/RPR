@@ -262,7 +262,7 @@ export class FactionService {
         );
       } else if (f.id === TypeFaction.PLOUTOCRATES) {
         f.senateurs.reduce((previous: Senateur, current: Senateur) => {
-          if (current.influence > previous.influence) {
+          if (current.influence >= previous.influence) {
             current.charge = Charge.CONSUL_DE_ROME;
             previous.charge = Charge.SANS;
             // this.consulDeRome = current;

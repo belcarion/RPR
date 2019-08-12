@@ -9,6 +9,7 @@ import { Province } from 'src/app/data.interface';
 export class ProvinceComponent implements OnInit {
 
   @Input()  province: Province;
+  @Input() displayH: boolean;
 
   constructor() { }
 

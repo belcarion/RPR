@@ -1,4 +1,10 @@
-<div fxLayout="column" fxLayoutAlign="center start" class="carte" *ngFor="let concession of concessions">
-  <div>{{concession.nom}}</div>
-  <div>{{concession.revenu}} talents par tour</div>
+<div fxLayoutAlign="center start" class="carte" *ngFor="let concession of concessions">
+  <div *ngIf="!displayH" fxLayout="column">
+    <div>{{concession.nom}}</div>
+    <div> ({{concession.revenu}} T/tour)</div>
+  </div>
+  <div *ngIf="displayH" fxLayout="row">
+    <div>{{concession.nom}}</div>
+    <div> ({{concession.revenu}} T/tour)</div>
+  </div>
 </div>

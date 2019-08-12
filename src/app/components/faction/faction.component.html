@@ -1,9 +1,9 @@
-<div fxLayout="row" fxLayoutGap="40px">
+<div class="faction">
+<div class="faction-statut" fxLayout="row" fxLayoutGap="40px">
   <div>{{faction.nom}}</div>
   <div fxLayout="row"><span>Trésor : {{ faction.tresor }}</span></div>
-  <div fxLayout="row" >Influence : </div>
-  <div fxLayout="row" >Votes : {{ faction.votes }}</div>
-  <div fxLayout="row" >Cartes :</div>
+  <div fxLayout="row">Votes : {{ faction.votes }}</div>
+  <div fxLayout="row">Cartes :</div>
   <mat-select style="width: 120px">
     <mat-option *ngFor="let carte of faction.cartes">
       {{ carte.nom}}
@@ -11,30 +11,58 @@
   </mat-select>
 </div>
 
-<clr-datagrid>
-  <clr-dg-column [clrDgField]="'nom'">Nom</clr-dg-column>
-  <clr-dg-column>Charge</clr-dg-column>
-  <clr-dg-column [clrDgField]="'militaire'">Militaire</clr-dg-column>
-  <clr-dg-column>Loyauté</clr-dg-column>
-  <clr-dg-column>Eloquence</clr-dg-column>
-  <clr-dg-column>Influence</clr-dg-column>
-  <clr-dg-column>Popularité</clr-dg-column>
-  <clr-dg-column>Trésor</clr-dg-column>
-  <clr-dg-column>Chevaliers</clr-dg-column>
+<table mat-table [dataSource]="faction.senateurs" multiTemplateDataRows class="mat-elevation-z8">
+  <ng-container matColumnDef="nom">
+    <th class="col-nom" mat-header-cell *matHeaderCellDef> Nom </th>
+    <td class="col-nom" mat-cell *matCellDef="let senateur"> {{senateur.nom}} </td>
+  </ng-container>
+  <ng-container matColumnDef="charge">
+    <th class="col-charge" mat-header-cell *matHeaderCellDef> Charge </th>
+    <td class="col-charge" mat-cell *matCellDef="let senateur"> {{senateur.charge}} </td>
+  </ng-container>
+  <ng-container matColumnDef="militaire">
+    <th class="col-num col-val-fixes" mat-header-cell *matHeaderCellDef> Militaire </th>
+    <td class="col-num col-val-fixes" mat-cell *matCellDef="let senateur"> {{senateur.militaire}} </td>
+  </ng-container>
+  <ng-container matColumnDef="loyaute">
+    <th class="col-num col-val-fixes" mat-header-cell *matHeaderCellDef> Loyauté </th>
+    <td class="col-num col-val-fixes" mat-cell *matCellDef="let senateur"> {{senateur.loyaute}} </td>
+  </ng-container>
+  <ng-container matColumnDef="eloquence">
+    <th class="col-num col-val-fixes" mat-header-cell *matHeaderCellDef> Eloquence </th>
+    <td class="col-num col-val-fixes" mat-cell *matCellDef="let senateur"> {{senateur.eloquence}} </td>
+  </ng-container>
+  <ng-container matColumnDef="influence">
+    <th class="col-num col-val-variables" mat-header-cell *matHeaderCellDef> Influence </th>
+    <td class="col-num col-val-variables" mat-cell *matCellDef="let senateur"> {{senateur.influence}} </td>
+  </ng-container>
+  <ng-container matColumnDef="popularite">
+    <th class="col-num col-val-variables" mat-header-cell *matHeaderCellDef> Popularite </th>
+    <td class="col-num col-val-variables" mat-cell *matCellDef="let senateur"> {{senateur.popularite}} </td>
+  </ng-container>
+  <ng-container matColumnDef="tresor">
+    <th class="col-num" class="col-tresor" mat-header-cell *matHeaderCellDef> Tresor </th>
+    <td class="col-num col-tresor" mat-cell *matCellDef="let senateur"> {{senateur.tresor}} </td>
+  </ng-container>
+  <ng-container matColumnDef="chevaliers">
+    <th class="col-num col-val-variables" mat-header-cell *matHeaderCellDef> Chevaliers </th>
+    <td class="col-num col-val-variables" mat-cell *matCellDef="let senateur"> {{senateur.chevaliers}} </td>
+  </ng-container>
 
-  <clr-dg-row *clrDgItems="let senateur of faction.senateurs">
-    <clr-dg-cell [ngClass]="{ 'chef': senateur.chef, 'corrompu': senateur.corrompu }">{{ senateur.nom }}</clr-dg-cell>
-    <clr-dg-cell>{{ senateur.charge }}</clr-dg-cell>
-    <clr-dg-cell>{{ senateur.militaire }}</clr-dg-cell>
-    <clr-dg-cell>{{ senateur.loyaute }}</clr-dg-cell>
-    <clr-dg-cell>{{ senateur.eloquence }}</clr-dg-cell>
-    <clr-dg-cell>{{ senateur.influence }}</clr-dg-cell>
-    <clr-dg-cell>{{ senateur.popularite }}</clr-dg-cell>
-    <clr-dg-cell>{{ senateur.tresor }}</clr-dg-cell>
-    <clr-dg-cell>{{ senateur.chevaliers }}</clr-dg-cell>
-    <clr-dg-row-detail *clrIfExpanded="true">
-      <app-concession [concessions]="senateur.concessions"></app-concession>
-      <app-province [province]="senateur.province"></app-province>
-    </clr-dg-row-detail>
-  </clr-dg-row>
-</clr-datagrid>
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let senateur" [attr.colspan]="columnsToDisplay.length">
+      <div [@detailExpand]="isExpanded(senateur)" fxLayout="row">
+        <app-concession [displayH]="true" [concessions]="senateur.concessions"></app-concession>
+        <app-province [displayH]="true" [province]="senateur.province"></app-province>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let senateur; columns: columnsToDisplay;" class="senateur-row">
+  <!-- [class.example-expanded-row]="isExpanded(senateur)"> -->
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="senateur-detail-row"></tr>
+</table>
+</div>

@@ -2,16 +2,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { AppComponent } from './app.component';
 import { FactionComponent } from './components/faction/faction.component';
-import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConcessionComponent } from './components/cartes/concession/concession.component';
 import { ProvinceComponent } from './components/cartes/province/province.component';
@@ -40,8 +40,8 @@ import { PhaseForumComponent } from './components/phases/phase-forum/phase-forum
   imports: [
     BrowserModule,
     FlexLayoutModule,
-    ClarityModule,
     BrowserAnimationsModule,
+    MatTableModule,
     MatToolbarModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -53,4 +53,4 @@ import { PhaseForumComponent } from './components/phases/phase-forum/phase-forum
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

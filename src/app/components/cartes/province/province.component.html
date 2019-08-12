@@ -1,10 +1,17 @@
 <div *ngIf="province" fxLayout="column" fxLayoutAlign="center start"
   [ngClass]="{'nondeveloppee': !province.developpee,'developpee': province.developpee}">
-  <div fxLayout="row" fxLayoutGap="30px">
+  <div fxLayout="row" fxLayoutGap="10px">
     <div>{{province.nom}}</div>
     <div>Mandat: {{province.mandat}}</div>
+    <div *ngIf="displayH" fxLayout="row" fxLayoutGap="10px">
+        <div>F. mil.: {{province.forceMilitaire[province.developpee]}}</div>
+        <div>F. nav.: {{province.forceNavale[province.developpee]}}</div>
+        <div>Revenu: {{province.spoliation[province.developpee]}}</div>
+      </div>
+      </div>
+  <div *ngIf="!displayH">
+    <div>Force militaire: {{province.forceMilitaire[province.developpee]}}</div>
+    <div>Force navale: {{province.forceNavale[province.developpee]}}</div>
+    <div>Revenu: {{province.spoliation[province.developpee]}}</div>
   </div>
-  <div>Force militaire : {{province.forceMilitaire[province.developpee]}}</div>
-  <div>Force navale : {{province.forceNavale[province.developpee]}}</div>
-  <div>Revenu: {{province.spoliation[province.developpee]}}</div>
 </div>

@@ -8,6 +8,7 @@ import { FactionService } from 'src/app/services/faction.service';
   styleUrls: ['./phase-forum.component.scss']
 })
 export class PhaseForumComponent implements OnInit {
+  public result: string[];
 
   constructor(
     private phaseForumService: PhaseForumService,
@@ -15,9 +16,8 @@ export class PhaseForumComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const sen = this.phaseForumService.senateurPlusVulnerable(
-      this.factionService.getFactionJoueur(),
-      this.factionService.getFactionJoueur().senateurs[0]);
+    this.result = this.phaseForumService.tentativePersuasion(
+      this.factionService.getFactionJoueur());
   }
 
 }
