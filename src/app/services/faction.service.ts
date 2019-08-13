@@ -6,7 +6,8 @@ import {
   TypeFaction,
   Charge,
   TypeCarte,
-  Concession
+  Concession,
+  TypeCharge
 } from '../data.interface';
 import { RomeService } from './rome.service';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -30,9 +31,18 @@ export class FactionService {
   public majFactions(f: Faction[]) {
     this._factions.next(f);
   }
-
-  public getFactionJoueur() {
-    return this._factions.getValue().find((f: Faction) => f.id === TypeFaction.JOUEUR);
+  public majFaction(nf: Faction) {
+    const factions: Faction[] = this._factions.getValue();
+    factions.forEach((f: Faction) => {
+      if (f.id === nf.id) {
+        f.tresor = nf.tresor;
+        f.chef = nf.chef;
+      }
+    });
+    this._factions.next(factions);
+  }
+  public getFaction(type: TypeFaction) {
+    return this._factions.getValue().find((f: Faction) => f.id === type);
   }
 
   public getTotalAptitude(faction: Faction, aptitude: string): number {
@@ -132,7 +142,7 @@ export class FactionService {
             sen.rebelle = false;
             sen.tresor = 0;
             sen.corrompu = false;
-            sen.charge = Charge.SANS;
+            sen.charge = { rang: 7, nom: TypeCharge.SANS };
           }
           result.push(msg);
         }
@@ -199,21 +209,7 @@ export class FactionService {
       factions.push(f);
     }
     factions[0].id = TypeFaction.JOUEUR;
-    // Impérialistes : plus grande aptitude militaire
-    const imp = factions
-      .filter((f: Faction) => !f.id)
-      .reduce((previous: Faction, current: Faction) => {
-        if (
-          this.getTotalAptitude(current, 'militaire') >
-          this.getTotalAptitude(previous, 'militaire')
-        ) {
-          return current;
-        } else {
-          return previous;
-        }
-      });
-    imp.id = TypeFaction.IMPERIALISTES;
-    imp.nom = 'IMPERIALISTES';
+    factions[0].suivant = TypeFaction.PLOUTOCRATES;
     // Ploutocrates : plus grande influence
     const ploutocrates = factions
       .filter((f: Faction) => !f.id)
@@ -229,6 +225,23 @@ export class FactionService {
       });
     ploutocrates.id = TypeFaction.PLOUTOCRATES;
     ploutocrates.nom = 'PLOUTOCRATES';
+    ploutocrates.suivant = TypeFaction.IMPERIALISTES;
+    // Impérialistes : plus grande aptitude militaire
+    const imp = factions
+      .filter((f: Faction) => !f.id)
+      .reduce((previous: Faction, current: Faction) => {
+        if (
+          this.getTotalAptitude(current, 'militaire') >
+          this.getTotalAptitude(previous, 'militaire')
+        ) {
+          return current;
+        } else {
+          return previous;
+        }
+      });
+    imp.id = TypeFaction.IMPERIALISTES;
+    imp.nom = 'IMPERIALISTES';
+    imp.suivant = TypeFaction.CONSERVATEURS;
     // Conservateurs : plus petite influence
     const conservateurs = factions
       .filter((f: Faction) => !f.id)
@@ -244,11 +257,13 @@ export class FactionService {
       });
     conservateurs.id = TypeFaction.CONSERVATEURS;
     conservateurs.nom = 'CONSERVATEURS';
+    conservateurs.suivant = TypeFaction.POPULISTES;
     // Populistes : faction restante
     factions.forEach((f: Faction) => {
       if (!f.id) {
         f.id = TypeFaction.POPULISTES;
         f.nom = 'POPULISTES';
+        f.suivant = TypeFaction.JOUEUR;
       }
     });
     factions.forEach((f: Faction) => {
@@ -263,8 +278,10 @@ export class FactionService {
       } else if (f.id === TypeFaction.PLOUTOCRATES) {
         f.senateurs.reduce((previous: Senateur, current: Senateur) => {
           if (current.influence >= previous.influence) {
-            current.charge = Charge.CONSUL_DE_ROME;
-            previous.charge = Charge.SANS;
+            current.charge = { rang: 2, nom: TypeCharge.CONSUL_DE_ROME };
+            current.influence += 5;
+            current.ancienConsul = true;
+            previous.charge =  { rang: 7, nom: TypeCharge.SANS };
             // this.consulDeRome = current;
             return current;
           } else {
@@ -406,4 +423,44 @@ export class FactionService {
     });
     this._factions.next(factions);
   }
+
+  public getSPHR(): any {
+    const factions: Faction[] = this._factions.getValue();
+    let fsphr: Faction;
+    let sphr: Senateur;
+    factions.forEach((f: Faction) => {
+      const s = f.senateurs
+      .filter((sen: Senateur) => !sen.province)
+      .reduce((prev: Senateur, curr: Senateur) => {
+        if (curr.charge.rang > prev.charge.rang) {
+          return curr;
+        }
+        return prev;
+      });
+      if (!sphr || s.charge.rang > sphr.charge.rang) {
+        sphr = s;
+        fsphr = f;
+      }
+    });
+    if (!sphr || sphr.charge.nom === TypeCharge.SANS) {
+      // Si aucun, sénateur le plus influent
+      factions.forEach((f: Faction) => {
+        const s = f.senateurs
+        .filter((sen: Senateur) => !sen.province)
+        .reduce((previous: Senateur, current: Senateur) => {
+          if (current.influence >= previous.influence) {
+            return current;
+          } else {
+            return previous;
+          }
+        });
+        if (!sphr || s.influence > sphr.influence) {
+          sphr = s;
+          fsphr = f;
+        }
+      });
+    }
+    return { sphr: sphr, faction: fsphr };
+  }
+
 }

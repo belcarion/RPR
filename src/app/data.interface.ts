@@ -2,7 +2,7 @@ import { ProvinceId, GuerreId } from './data/cartes.data';
 
 //////////////////////////
 // Enums
-export enum Charge {
+export enum TypeCharge {
   SANS = '',
   CONSUL_DE_ROME = 'Consul de Rome',
   CONSUL_MILITAIRE = 'Consul militaire',
@@ -47,8 +47,13 @@ export interface Faction {
   chef?: number;
   cartes?: Carte[];
   tresor: number;
+  suivant?: TypeFaction;
 }
 
+export interface Charge {
+  rang: number;
+  nom: TypeCharge;
+}
 export interface Carte {
   nom: string;
   type: TypeCarte;

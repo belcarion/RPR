@@ -1,3 +1,7 @@
-<div *ngFor="let res of result">
-    <span>{{ res }}</span>
+<div fxLayout="column">
+    <button mat-raised-button color="primary" (click)="suivant()">Suivant</button>
+    <span>La faction {{ factionJouant.nom }} a l'initiative</span>
+    <div *ngFor="let res of result">
+        <span>{{ res }}</span>
+    </div>
 </div>

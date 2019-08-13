@@ -9,7 +9,8 @@ import {
   Province,
   Legion,
   Charge,
-  Escadre
+  Escadre,
+  TypeCharge
 } from '../data.interface';
 import { CONCESSIONS } from '../data/concessions.data';
 import { INTRIGUES } from '../data/intrigues.data';
@@ -47,7 +48,7 @@ export class RomeService {
       sen.corrompu = false;
       sen.ancienConsul = false;
       sen.rebelle = false;
-      sen.charge = Charge.SANS;
+      sen.charge = { rang: 7, nom: TypeCharge.SANS};
       return sen;
     });
     const hommesEtat: Senateur[] = HOMMESDETAT.map((sen: Senateur) => {
@@ -58,7 +59,7 @@ export class RomeService {
       sen.corrompu = false;
       sen.ancienConsul = false;
       sen.rebelle = false;
-      sen.charge = Charge.SANS;
+      sen.charge = { rang: 7, nom: TypeCharge.SANS};
       return sen;
     });
     this._pioche = this._pioche.concat(senateurs);

@@ -42,12 +42,9 @@ export class PhaseForumService {
   public tentativePersuasion(faction: Faction): string[] {
     const msg = [];
     const sen1: Senateur = this.senateurPersuadeur(faction);
-    console.log('Sénateur persuadeur = ' + sen1.nom);
-    msg.push('Sénateur persuadeur = ' + sen1.nom);
 
     const sv: SenateurVulnerable = this.senateurPlusVulnerable(faction, sen1);
-    console.log('Sénateur le plus vulnérable: ' + sv.senateur.nom);
-    msg.push('Sénateur le plus vulnérable: ' + sv.senateur.nom);
+    msg.push('Le sénateur ' + sen1.nom + ' tente de corrompre le sénateur ' + sv.senateur.nom);
 
     let nivReussite = sen1.eloquence + sen1.influence
       - (sv.senateur.loyaute + sv.senateur.tresor + (sv.tresorFaction ? 7 : 0));
@@ -76,14 +73,42 @@ export class PhaseForumService {
         return 0;
       });
       while (nivReussite > 4) {
-        for (let index = 0; index < fcc.length; index++) {
-          if (nivReussite > 4 && fcc[index].tresor > 0) {
-            msg.push('La faction ' + fcc[index].nom + ' ajoute 1 talent en contre-corruption');
+        // En cours
+        const factionCouranteId = faction.suivant;
+        const factionCourante = this.factionService.getFaction(factionCouranteId);
+        // for (let index = 0; index < fcc.length; index++) {
+        if (factionCouranteId !== faction.id && factionCouranteId !== TypeFaction.JOUEUR) {
+          if (nivReussite > 4 && factionCourante.tresor > 0) {
+            msg.push('La faction ' + factionCourante.nom + ' ajoute 1 talent en contre-corruption');
             // Call service
-            fcc[index].tresor -= 1;
+            factionCourante.tresor -= 1;
+            this.factionService.majFaction(factionCourante);
             contreCorruption += 1;
             nivReussite -= 1;
           }
+        }
+        // }
+      }
+      if (sv.tresorFaction) {
+        // Si sénateur aligné
+        this.factions.find((f: Faction) => {
+          const s = f.senateurs.find((sen: Senateur) => {
+            return sen.nom === sv.senateur.nom;
+          });
+          if (s) {
+            s.tresor += contreCorruption;
+            return true;
+          }
+          return false;
+        });
+        this.factionService.majFactions(this.factions);
+      } else {
+        // Si sénateur non aligné
+        const s = this.senateursNonAlignes.find((sen: Senateur) => {
+          return sen.nom === sv.senateur.nom;
+        });
+        if (s) {
+          s.tresor += contreCorruption;
         }
       }
     }
