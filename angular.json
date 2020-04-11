@@ -10,32 +10,33 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss",
-          "spec": true
+          "style": "scss",
+          "skipTests": false
         },
         "@schematics/angular:class": {
-          "spec": true
+          "skipTests": false
         },
         "@schematics/angular:directive": {
-          "spec": true
+          "skipTests": false
         },
         "@schematics/angular:guard": {
-          "spec": true
+          "skipTests": false
         },
         "@schematics/angular:module": {
-          "spec": true
+          "skipTests": false
         },
         "@schematics/angular:pipe": {
-          "spec": true
+          "skipTests": false
         },
         "@schematics/angular:service": {
-          "spec": true
+          "skipTests": false
         }
       },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/RPR",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -77,6 +78,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
