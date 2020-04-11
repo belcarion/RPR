@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Faction, Senateur } from "../data.interface";
 import { FactionService } from "./faction.service";
 import { RomeService } from './rome.service';
 

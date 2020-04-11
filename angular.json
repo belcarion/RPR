@@ -11,22 +11,22 @@
       "schematics": {
         "@schematics/angular:component": {
           "styleext": "scss",
-          "spec": false
+          "spec": true
         },
         "@schematics/angular:class": {
-          "spec": false
+          "spec": true
         },
         "@schematics/angular:directive": {
-          "spec": false
+          "spec": true
         },
         "@schematics/angular:guard": {
-          "spec": false
+          "spec": true
         },
         "@schematics/angular:module": {
-          "spec": false
+          "spec": true
         },
         "@schematics/angular:pipe": {
-          "spec": false
+          "spec": true
         },
         "@schematics/angular:service": {
           "spec": true

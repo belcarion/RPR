@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FactionService } from 'src/app/services/faction.service';
-import { Faction, Senateur } from 'src/app/data.interface';
+import { Faction, Senateur, TypeFaction } from 'src/app/data.interface';
 import { PhaseRevenusService } from 'src/app/services/phase-revenus.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { RomeService } from 'src/app/services/rome.service';
@@ -33,7 +33,7 @@ export class PhaseRevenuComponent implements OnInit {
 
   ngOnInit() {
     this.phaseRevenusService.genereRevenus();
-    this.faction = this.factionService.getFactionJoueur();
+    this.faction = this.factionService.getFaction(TypeFaction.JOUEUR);
     this.senateurs = this.faction.senateurs;
     this.senateursNonRebelles = this.faction.senateurs.filter((s: Senateur) => !s.rebelle);
     this.gouverneurs = this.faction.senateurs.filter((sen: Senateur) => {
