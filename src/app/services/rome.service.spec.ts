@@ -1,11 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { RomeService } from './rome.service';
 
-describe('QqService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+describe('RomeService', () => {
+  let service: RomeService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({})
+    service = TestBed.inject(RomeService);
+  });
 
   it('should be created', () => {
-    const service: RomeService = TestBed.get(RomeService);
     expect(service).toBeTruthy();
   });
 });

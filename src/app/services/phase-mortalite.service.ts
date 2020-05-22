@@ -10,7 +10,7 @@ export class PhaseMortaliteService {
     private factionService: FactionService,
     private romeService: RomeService) {}
 
-  public testMortalite(): number[] {
+  private testMortalite(): number[] {
     const sen = this.romeService.getRandomNumber(36);
     if (sen >= 31 && sen <= 34) {
       return [];
