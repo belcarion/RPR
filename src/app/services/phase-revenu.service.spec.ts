@@ -1,11 +1,31 @@
 import { TestBed } from '@angular/core/testing';
 import { PhaseRevenusService } from './phase-revenus.service';
+import { RomeService } from './rome.service';
 
-xdescribe('QqService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+fdescribe('PhaseRevenusService', () => {
+  let service: PhaseRevenusService;
+  let romeServiceSpy: any;
+  let factionServiceSpy: any;
+
+  beforeEach(() => {
+    romeServiceSpy = jasmine.createSpyObj('RomeService', ['getRandomNumber']);
+    factionServiceSpy = jasmine.createSpyObj('FactionService', ['retireSenateurMort']);
+    TestBed.configureTestingModule({
+
+      providers: [
+        // { provide: FactionService, useValue: factionServiceSpy },
+        { provide: RomeService, useValue: romeServiceSpy }
+      ]
+    });
+    service = TestBed.inject(PhaseRevenusService);
+  });
 
   it('should be created', () => {
-    const service: PhaseRevenusService = TestBed.inject(PhaseRevenusService);
     expect(service).toBeTruthy();
   });
+
+  it('should be created', () => {
+    romeServiceSpy.getRandomNumber.and.returnValue(3);
+  });
+
 });

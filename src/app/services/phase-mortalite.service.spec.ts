@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { PhaseMortaliteService } from './phase-mortalite.service';
 import { FactionService } from './faction.service';
-import { AppModule } from '../app.module';
 import { RomeService } from './rome.service';
 
 describe('PhaseMortaliteService', () => {
