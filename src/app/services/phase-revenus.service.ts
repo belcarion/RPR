@@ -56,7 +56,7 @@ export class PhaseRevenusService {
           if (test) {
             const sp = this.romeService.getRandomNumber(6, 1, sen.province.spoliation[sen.province.developpee]);
             sen.corrompu = true;
-            console.log('Le sénateur ' + sen.nom + ' de la faction ' + faction.id
+            console.log('Le sénateur' + sen.nom + ' de la faction ' + faction.id
               + ' spolie la province ' + sen.province.nom + ' pour ' + sp + ' T');
             if (sp < 0) {
               this.romeService.majTresor(sp);
