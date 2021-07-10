@@ -23,7 +23,6 @@
           "skipTests": false
         },
         "@schematics/angular:module": {
-          "skipTests": false
         },
         "@schematics/angular:pipe": {
           "skipTests": false
@@ -36,7 +35,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "outputPath": "dist/RPR",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -51,7 +49,13 @@
             ],
             "scripts": [
               "node_modules/@webcomponents/custom-elements/custom-elements.min.js"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -65,7 +69,6 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -81,7 +84,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
