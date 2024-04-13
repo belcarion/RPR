@@ -1,9 +1,9 @@
-<div *ngIf="province" fxLayout="column" fxLayoutAlign="center start"
+<div *ngIf="province" class="fx-column fx-center-start"
   [ngClass]="{'nondeveloppee': !province.developpee,'developpee': province.developpee}">
-  <div fxLayout="row" fxLayoutGap="10px">
+  <div class="fx-row fx-gap-10">
     <div>{{province.nom}}</div>
     <div>Mandat: {{province.mandat}}</div>
-    <div *ngIf="displayH" fxLayout="row" fxLayoutGap="10px">
+    <div *ngIf="displayH" class="fx-row fx-gap-10">
         <div>F. mil.: {{province.forceMilitaire[province.developpee]}}</div>
         <div>F. nav.: {{province.forceNavale[province.developpee]}}</div>
         <div>Revenu: {{province.spoliation[province.developpee]}}</div>

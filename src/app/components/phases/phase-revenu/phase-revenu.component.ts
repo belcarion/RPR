@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FactionService } from 'src/app/services/faction.service';
 import { Faction, Senateur, TypeFaction } from 'src/app/data.interface';
 import { PhaseRevenusService } from 'src/app/services/phase-revenus.service';
-import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { RomeService } from 'src/app/services/rome.service';
 
 // spoliation/développement province

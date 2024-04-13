@@ -11,7 +11,7 @@ import {
 } from '../data.interface';
 import { RomeService } from './rome.service';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'

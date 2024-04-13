@@ -1,9 +1,9 @@
-<div fxLayoutAlign="center start" class="carte" *ngFor="let concession of concessions">
-  <div *ngIf="!displayH" fxLayout="column">
+<div class="fx-center-start carte" *ngFor="let concession of concessions">
+  <div *ngIf="!displayH" class="fx-column">
     <div>{{concession.nom}}</div>
     <div> ({{concession.revenu}} T/tour)</div>
   </div>
-  <div *ngIf="displayH" fxLayout="row">
+  <div *ngIf="displayH" class="fx-row">
     <div>{{concession.nom}}</div>
     <div> ({{concession.revenu}} T/tour)</div>
   </div>

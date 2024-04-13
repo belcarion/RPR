@@ -6,3 +6,37 @@
   border-radius: 10px;
   padding: 5px;
 }
+
+.fx-row {
+  display: flex;
+  flex-direction: row;
+}
+.fx-column {
+  display: flex;
+  flex-direction: column;
+}
+.fx-layout-center-start {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.fx-gap-10 {
+  display: flex;
+  gap: 10px;
+}
+.fx-gap-20 {
+  display: flex;
+  gap: 20px;
+}
+.fx-gap-30 {
+  display: flex;
+  gap: 30px;
+}
+.fx-gap-40 {
+  display: flex;
+  gap: 40px;
+}
+.fx-gap-50 {
+  display: flex;
+  gap: 50px;
+}
