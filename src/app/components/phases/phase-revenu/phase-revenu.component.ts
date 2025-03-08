@@ -9,9 +9,10 @@ import { RomeService } from 'src/app/services/rome.service';
 // redistribution
 // contributions
 @Component({
-  selector: 'app-phase-revenu',
-  templateUrl: './phase-revenu.component.html',
-  styleUrls: ['./phase-revenu.component.scss']
+    selector: 'app-phase-revenu',
+    templateUrl: './phase-revenu.component.html',
+    styleUrls: ['./phase-revenu.component.scss'],
+    standalone: false
 })
 export class PhaseRevenuComponent implements OnInit {
   @Output() fin: EventEmitter<boolean> = new EventEmitter<boolean>();

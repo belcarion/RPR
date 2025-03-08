@@ -4,9 +4,10 @@ import { RomeService } from 'src/app/services/rome.service';
 import { combineLatest, BehaviorSubject } from 'rxjs';
 
 @Component({
-  selector: 'app-rome',
-  templateUrl: './rome.component.html',
-  styleUrls: ['./rome.component.scss']
+    selector: 'app-rome',
+    templateUrl: './rome.component.html',
+    styleUrls: ['./rome.component.scss'],
+    standalone: false
 })
 export class RomeComponent implements OnInit {
   public tresor = 0;

@@ -4,16 +4,17 @@ import { FactionService } from 'src/app/services/faction.service';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 
 @Component({
-  selector: 'app-faction',
-  templateUrl: './faction.component.html',
-  styleUrls: ['./faction.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+    selector: 'app-faction',
+    templateUrl: './faction.component.html',
+    styleUrls: ['./faction.component.scss'],
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ],
+    standalone: false
 })
 export class FactionComponent implements OnInit {
 

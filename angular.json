@@ -33,12 +33,15 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/RPR",
+            "outputPath": {
+              "base": "dist/RPR"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
@@ -50,12 +53,11 @@
             "scripts": [
               "node_modules/@webcomponents/custom-elements/custom-elements.min.js"
             ],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -70,8 +72,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -90,18 +90,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "RPR:build"
+            "buildTarget": "RPR:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "RPR:build:production"
+              "buildTarget": "RPR:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "RPR:build"
+            "buildTarget": "RPR:build"
           }
         },
         "test": {
@@ -142,5 +142,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

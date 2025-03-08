@@ -4,9 +4,10 @@ import { FactionService } from 'src/app/services/faction.service';
 import { Faction, TypeFaction } from 'src/app/data.interface';
 
 @Component({
-  selector: 'app-phase-forum',
-  templateUrl: './phase-forum.component.html',
-  styleUrls: ['./phase-forum.component.scss']
+    selector: 'app-phase-forum',
+    templateUrl: './phase-forum.component.html',
+    styleUrls: ['./phase-forum.component.scss'],
+    standalone: false
 })
 export class PhaseForumComponent implements OnInit {
   @Output() fin: EventEmitter<boolean> = new EventEmitter<boolean>();

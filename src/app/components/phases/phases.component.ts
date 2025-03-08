@@ -4,9 +4,10 @@ import { PhaseRevenusService } from 'src/app/services/phase-revenus.service';
 import { Phase } from 'src/app/services/tour.service';
 
 @Component({
-  selector: "app-phases",
-  templateUrl: "./phases.component.html",
-  styleUrls: ["./phases.component.scss"]
+    selector: "app-phases",
+    templateUrl: "./phases.component.html",
+    styleUrls: ["./phases.component.scss"],
+    standalone: false
 })
 export class PhasesComponent implements OnInit {
 

@@ -7,9 +7,10 @@ import { FactionService } from 'src/app/services/faction.service';
 import { RomeService } from 'src/app/services/rome.service';
 
 @Component({
-  selector: 'app-factions',
-  templateUrl: './factions.component.html',
-  styleUrls: ['./factions.component.scss']
+    selector: 'app-factions',
+    templateUrl: './factions.component.html',
+    styleUrls: ['./factions.component.scss'],
+    standalone: false
 })
 export class FactionsComponent implements OnInit {
   public factions: Faction[] = [];

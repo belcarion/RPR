@@ -2,9 +2,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PhaseMortaliteService } from 'src/app/services/phase-mortalite.service';
 
 @Component({
-  selector: 'app-phase-mortalite',
-  templateUrl: './phase-mortalite.component.html',
-  styleUrls: ['./phase-mortalite.component.scss']
+    selector: 'app-phase-mortalite',
+    templateUrl: './phase-mortalite.component.html',
+    styleUrls: ['./phase-mortalite.component.scss'],
+    standalone: false
 })
 export class PhaseMortaliteComponent implements OnInit {
   @Output() fin: EventEmitter<boolean> = new EventEmitter<boolean>();
