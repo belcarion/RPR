@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { RomeService } from './rome.service';
 import { TypeCarte, Faction, Senateur, SenateurVulnerable, TypeFaction } from '../data.interface';
 import { FactionService } from './faction.service';
@@ -8,14 +8,14 @@ import { combineLatest } from 'rxjs';
   providedIn: 'root'
 })
 export class PhaseForumService {
+  private romeService = inject(RomeService);
+  private factionService = inject(FactionService);
+
 
   private factions: Faction[];
   private senateursNonAlignes: Senateur[];
 
-  constructor(
-    private romeService: RomeService,
-    private factionService: FactionService
-  ) {
+  constructor() {
     combineLatest([
       this.factionService.getFactions(),
       this.romeService.getReleveSenatoriale()

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Faction, Senateur, Concession, TypeFaction } from '../data.interface';
 import { RomeService } from './rome.service';
 import { FactionService } from './faction.service';
@@ -7,13 +7,15 @@ import { FactionService } from './faction.service';
   providedIn: 'root'
 })
 export class PhaseRevenusService {
+  private romeService = inject(RomeService);
+  private factionService = inject(FactionService);
+
 
   private factions: Faction[];
 
-  constructor(
-    private romeService: RomeService,
-    private factionService: FactionService
-  ) {
+  constructor() {
+    const factionService = this.factionService;
+
     factionService.getFactions().subscribe((f: Faction[]) => {
       this.factions = f;
     });

@@ -1,3 +1,5 @@
-<div *ngFor='let faction of factions'>
-  <app-faction [faction]='faction'></app-faction>
-</div>
+@for (faction of factions; track faction) {
+  <div>
+    <app-faction [faction]='faction'></app-faction>
+  </div>
+}

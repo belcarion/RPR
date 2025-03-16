@@ -3,8 +3,14 @@
     <span class="phases">Tour {{tour}}</span>
     <span class="phases">{{phase}}</span>
   </div>
-  <app-phase-mortalite *ngIf="phase === 'Phase de mortalité'" (fin)="finPhase('Phase de mortalité')">
-  </app-phase-mortalite>
-  <app-phase-revenu *ngIf="phase === 'Phase de revenu'" (fin)="finPhase('Phase de revenu')"></app-phase-revenu>
-  <app-phase-forum *ngIf="phase === 'Phase de forum'" (fin)="finPhase('Phase de forum')"></app-phase-forum>
+  @if (phase === 'Phase de mortalité') {
+    <app-phase-mortalite (fin)="finPhase('Phase de mortalité')">
+    </app-phase-mortalite>
+  }
+  @if (phase === 'Phase de revenu') {
+    <app-phase-revenu (fin)="finPhase('Phase de revenu')"></app-phase-revenu>
+  }
+  @if (phase === 'Phase de forum') {
+    <app-phase-forum (fin)="finPhase('Phase de forum')"></app-phase-forum>
+  }
 </div>

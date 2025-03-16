@@ -1,15 +1,25 @@
-<div class="fx-column fx-center-start" *ngFor="let f of forum">
-  <div *ngIf="f.type === 'guerre'" class="carte">
-    <div>{{f.nom}}</div>
+@for (f of forum; track f) {
+  <div class="fx-column fx-center-start">
+    @if (f.type === 'guerre') {
+      <div class="carte">
+        <div>{{f.nom}}</div>
+      </div>
+    }
+    @if (f.type === 'senateur') {
+      <div  class="carte">
+        <div>{{f.nom}}</div>
+        <div>Elo: {{f.loyaute}}   Inf: {{f.influence}}   Mil: {{f.militaire}}   Trésor: {{f.tresor}}</div>
+      </div>
+    }
+    @if (f.type === 'province') {
+      <div>
+        <app-province [province]="f"></app-province>
+      </div>
+    }
+    @if (f.type === 'concession') {
+      <div>
+        <app-concession [concessions]="f"></app-concession>
+      </div>
+    }
   </div>
-  <div *ngIf="f.type === 'senateur'"  class="carte">
-    <div>{{f.nom}}</div>
-    <div>Elo: {{f.loyaute}}   Inf: {{f.influence}}   Mil: {{f.militaire}}   Trésor: {{f.tresor}}</div>
-  </div>
-  <div *ngIf="f.type === 'province'">
-    <app-province [province]="f"></app-province>
-  </div>
-  <div *ngIf="f.type === 'concession'">
-    <app-concession [concessions]="f"></app-concession>
-  </div>
-</div>
+}

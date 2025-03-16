@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { FactionService } from "./faction.service";
 import { RomeService } from './rome.service';
 
@@ -6,9 +6,9 @@ import { RomeService } from './rome.service';
   providedIn: "root"
 })
 export class PhaseMortaliteService {
-  constructor(
-    private factionService: FactionService,
-    private romeService: RomeService) {}
+  private factionService = inject(FactionService);
+  private romeService = inject(RomeService);
+
 
   private testMortalite(): number[] {
     const sen = this.romeService.getRandomNumber(36);

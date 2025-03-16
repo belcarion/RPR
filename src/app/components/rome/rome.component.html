@@ -22,10 +22,12 @@
     <span>Guerres inactives</span>
     <span>Chefs ennemis</span>
     <span>Relève sénatoriale</span>
-    <div *ngFor="let sen of releveSenatoriale" class="carte">
-      <div>{{sen.nom}}</div>
-      <div>Elo: {{sen.loyaute}} Inf: {{sen.influence}} Mil: {{sen.militaire}} Trésor: {{sen.tresor}}</div>
-    </div>
+    @for (sen of releveSenatoriale; track sen) {
+      <div class="carte">
+        <div>{{sen.nom}}</div>
+        <div>Elo: {{sen.loyaute}} Inf: {{sen.influence}} Mil: {{sen.militaire}} Trésor: {{sen.tresor}}</div>
+      </div>
+    }
     <span>Concessions détruites</span>
     <app-concession [concessions]="concessionsDetruites"></app-concession>
   </div>

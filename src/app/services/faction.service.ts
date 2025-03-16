@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   Senateur,
   Faction,
@@ -17,11 +17,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class FactionService {
+  private romeService = inject(RomeService);
+  private snackBar = inject(MatSnackBar);
+
   private _factions: BehaviorSubject<Faction[]> = new BehaviorSubject<
     Faction[]
   >([]);
 
-  constructor(private romeService: RomeService, private snackBar: MatSnackBar) {
+  constructor() {
     this.initFactions();
   }
 

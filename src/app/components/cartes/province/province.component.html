@@ -1,17 +1,23 @@
-<div *ngIf="province" class="fx-column fx-center-start"
-  [ngClass]="{'nondeveloppee': !province.developpee,'developpee': province.developpee}">
-  <div class="fx-row fx-gap-10">
-    <div>{{province.nom}}</div>
-    <div>Mandat: {{province.mandat}}</div>
-    <div *ngIf="displayH" class="fx-row fx-gap-10">
-        <div>F. mil.: {{province.forceMilitaire[province.developpee]}}</div>
-        <div>F. nav.: {{province.forceNavale[province.developpee]}}</div>
+@if (province) {
+  <div class="fx-column fx-center-start"
+    [ngClass]="{'nondeveloppee': !province.developpee,'developpee': province.developpee}">
+    <div class="fx-row fx-gap-10">
+      <div>{{province.nom}}</div>
+      <div>Mandat: {{province.mandat}}</div>
+      @if (displayH) {
+        <div class="fx-row fx-gap-10">
+          <div>F. mil.: {{province.forceMilitaire[province.developpee]}}</div>
+          <div>F. nav.: {{province.forceNavale[province.developpee]}}</div>
+          <div>Revenu: {{province.spoliation[province.developpee]}}</div>
+        </div>
+      }
+    </div>
+    @if (!displayH) {
+      <div>
+        <div>Force militaire: {{province.forceMilitaire[province.developpee]}}</div>
+        <div>Force navale: {{province.forceNavale[province.developpee]}}</div>
         <div>Revenu: {{province.spoliation[province.developpee]}}</div>
       </div>
-      </div>
-  <div *ngIf="!displayH">
-    <div>Force militaire: {{province.forceMilitaire[province.developpee]}}</div>
-    <div>Force navale: {{province.forceNavale[province.developpee]}}</div>
-    <div>Revenu: {{province.spoliation[province.developpee]}}</div>
+    }
   </div>
-</div>
+}

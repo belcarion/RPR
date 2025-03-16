@@ -1,60 +1,86 @@
 <div class="fx-column">
   <button mat-raised-button color="primary" (click)="suivant()">Suivant</button>
-  <div *ngIf="etape === 1">
-    <div class="fx-row fx-gap-50">
-      <span>Spoliation provinces</span>
-    </div>
-    <div *ngFor="let sen of gouverneurs; let i = index" class="fx-gap-30">
-      <div>
-        <span>Le gouverneur {{sen.nom}} spolie-t'il sa province {{sen.province.nom}} ?</span>
-        <mat-checkbox (change)="spoliationPar($event, sen, i)">Oui</mat-checkbox>
+  @if (etape === 1) {
+    <div>
+      <div class="fx-row fx-gap-50">
+        <span>Spoliation provinces</span>
       </div>
-      <span>{{ result[i] }}</span>
+      @for (sen of gouverneurs; track sen; let i = $index) {
+        <div class="fx-gap-30">
+          <div>
+            <span>Le gouverneur {{sen.nom}} spolie-t'il sa province {{sen.province.nom}} ?</span>
+            <mat-checkbox (change)="spoliationPar($event, sen, i)">Oui</mat-checkbox>
+          </div>
+          <span>{{ result[i] }}</span>
+        </div>
+      }
     </div>
-  </div>
-  <div *ngIf="etape === 2">
-    <div class="fx-row fx-gap-50">
-      <span>Redistribution</span>
-    </div>
-    <div class="fx-column">
-      <div class="fx-row fx-gap-20">
-        <div>Faction = {{ faction.tresor }}</div>
+  }
+  @if (etape === 2) {
+    <div>
+      <div class="fx-row fx-gap-50">
+        <span>Redistribution</span>
       </div>
-      <div *ngFor="let sen of senateurs" class="fx-row fx-gap-20">
-        <div>{{ sen.nom }} = {{ sen.tresor }}</div>
-        <button [disabled]="sen.tresor === 0" mat-stroked-button (click)="redistribution(false, sen)">-</button>
-        <button [disabled]="faction.tresor === 0" mat-stroked-button (click)="redistribution(true, sen)">+</button>
+      <div class="fx-column">
+        <div class="fx-row fx-gap-20">
+          <div>Faction = {{ faction.tresor }}</div>
+        </div>
+        @for (sen of senateurs; track sen) {
+          <div class="fx-row fx-gap-20">
+            <div>{{ sen.nom }} = {{ sen.tresor }}</div>
+            <button [disabled]="sen.tresor === 0" mat-stroked-button (click)="redistribution(false, sen)">-</button>
+            <button [disabled]="faction.tresor === 0" mat-stroked-button (click)="redistribution(true, sen)">+</button>
+          </div>
+        }
       </div>
     </div>
-  </div>
-  <div *ngIf="etape === 3">
-    <span>Développement provinces</span>
-    <div *ngFor="let res of result">
-      <span>{{ res }}</span>
+  }
+  @if (etape === 3) {
+    <div>
+      <span>Développement provinces</span>
+      @for (res of result; track res) {
+        <div>
+          <span>{{ res }}</span>
+        </div>
+      }
     </div>
-  </div>
-  <div *ngIf="etape === 4">
-    <span>Contributions</span>
-    <div *ngFor="let sen of senateursNonRebelles" class="fx-row fx-gap-20">
-      <div>{{ sen.nom }} = {{ sen.tresor }}</div>
-      <button [disabled]="sen.tresor < 10" mat-stroked-button (click)="contributionJoueur(10, sen)">10</button>
-      <button [disabled]="sen.tresor < 25" mat-stroked-button (click)="contributionJoueur(25, sen)">25</button>
-      <button [disabled]="sen.tresor < 50" mat-stroked-button (click)="contributionJoueur(50, sen)">50</button>
-      </div>
-      <div *ngFor="let res of result">
-        <span>{{ res }}</span>
-      </div>
-  </div>
-  <div *ngIf="etape === 5">
-    <span>Dettes de Rome</span>
-    <div *ngFor="let res of result">
-      <span>{{ res }}</span>
+  }
+  @if (etape === 4) {
+    <div>
+      <span>Contributions</span>
+      @for (sen of senateursNonRebelles; track sen) {
+        <div class="fx-row fx-gap-20">
+          <div>{{ sen.nom }} = {{ sen.tresor }}</div>
+          <button [disabled]="sen.tresor < 10" mat-stroked-button (click)="contributionJoueur(10, sen)">10</button>
+          <button [disabled]="sen.tresor < 25" mat-stroked-button (click)="contributionJoueur(25, sen)">25</button>
+          <button [disabled]="sen.tresor < 50" mat-stroked-button (click)="contributionJoueur(50, sen)">50</button>
+        </div>
+      }
+      @for (res of result; track res) {
+        <div>
+          <span>{{ res }}</span>
+        </div>
+      }
     </div>
-  </div>
-  <div *ngIf="etape === 6">
-    <span>Retour des gouverneurs</span>
-    <div *ngFor="let res of result">
-      <span>{{ res }}</span>
+  }
+  @if (etape === 5) {
+    <div>
+      <span>Dettes de Rome</span>
+      @for (res of result; track res) {
+        <div>
+          <span>{{ res }}</span>
+        </div>
+      }
     </div>
-  </div>
+  }
+  @if (etape === 6) {
+    <div>
+      <span>Retour des gouverneurs</span>
+      @for (res of result; track res) {
+        <div>
+          <span>{{ res }}</span>
+        </div>
+      }
+    </div>
+  }
 </div>

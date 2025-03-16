@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Carte, Legion, Escadre, Senateur, Concession } from 'src/app/data.interface';
 import { RomeService } from 'src/app/services/rome.service';
 import { combineLatest, BehaviorSubject } from 'rxjs';
+import { ForumComponent } from '../forum/forum.component';
+
+import { ConcessionComponent } from '../cartes/concession/concession.component';
 
 @Component({
     selector: 'app-rome',
     templateUrl: './rome.component.html',
     styleUrls: ['./rome.component.scss'],
-    standalone: false
+    imports: [ForumComponent, ConcessionComponent]
 })
 export class RomeComponent implements OnInit {
+  private romeService = inject(RomeService);
+
   public tresor = 0;
   public agitationSociale = 0;
   public legions: Legion[];
@@ -19,7 +24,9 @@ export class RomeComponent implements OnInit {
   public concessionsDetruites: Concession[] = [];
   public forum: Carte[] = [];
 
-  constructor(private romeService: RomeService) {
+  constructor() {
+    const romeService = this.romeService;
+
     combineLatest([
       this.romeService.getChefsEnnemis(),
       this.romeService.getReleveSenatoriale(),

@@ -1,24 +1,28 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import { PhaseForumService } from 'src/app/services/phase-forum.service';
 import { FactionService } from 'src/app/services/faction.service';
 import { Faction, TypeFaction } from 'src/app/data.interface';
+import { MatButton } from '@angular/material/button';
+
 
 @Component({
     selector: 'app-phase-forum',
     templateUrl: './phase-forum.component.html',
     styleUrls: ['./phase-forum.component.scss'],
-    standalone: false
+    imports: [MatButton]
 })
 export class PhaseForumComponent implements OnInit {
+  private phaseForumService = inject(PhaseForumService);
+  private factionService = inject(FactionService);
+
   @Output() fin: EventEmitter<boolean> = new EventEmitter<boolean>();
   public result: string[];
   public factions: Faction[];
   public factionJouant: Faction;
 
-  constructor(
-    private phaseForumService: PhaseForumService,
-    private factionService: FactionService
-  ) {
+  constructor() {
+    const factionService = this.factionService;
+
     factionService.getFactions()
       .subscribe((f: Faction[]) => {
         this.factions = f;

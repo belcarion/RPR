@@ -1,9 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import { FactionService } from 'src/app/services/faction.service';
 import { Faction, Senateur, TypeFaction } from 'src/app/data.interface';
 import { PhaseRevenusService } from 'src/app/services/phase-revenus.service';
-import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox';
 import { RomeService } from 'src/app/services/rome.service';
+import { MatButton } from '@angular/material/button';
+
 
 // spoliation/développement province
 // redistribution
@@ -12,9 +14,13 @@ import { RomeService } from 'src/app/services/rome.service';
     selector: 'app-phase-revenu',
     templateUrl: './phase-revenu.component.html',
     styleUrls: ['./phase-revenu.component.scss'],
-    standalone: false
+    imports: [MatButton, MatCheckbox]
 })
 export class PhaseRevenuComponent implements OnInit {
+  private factionService = inject(FactionService);
+  private phaseRevenusService = inject(PhaseRevenusService);
+  private romeService = inject(RomeService);
+
   @Output() fin: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public etape = 0;
@@ -25,12 +31,6 @@ export class PhaseRevenuComponent implements OnInit {
   public senateurs: Senateur[];
   public senateursNonRebelles: Senateur[];
   private contribution: number;
-
-  constructor(
-    private factionService: FactionService,
-    private phaseRevenusService: PhaseRevenusService,
-    private romeService: RomeService
-  ) { }
 
   ngOnInit() {
     this.phaseRevenusService.genereRevenus();
