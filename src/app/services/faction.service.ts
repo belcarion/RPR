@@ -47,7 +47,7 @@ export class FactionService {
 
   public getTotalAptitude(faction: Faction, aptitude: string): number {
     let mil = 0;
-    faction.senateurs.forEach((s: Senateur) => {
+    faction.senateurs?.forEach((s: Senateur) => {
       mil += s[aptitude];
     });
     return mil;
@@ -55,9 +55,9 @@ export class FactionService {
 
   public updateVotes(f: Faction) {
     let votes = 0;
-    f.senateurs.forEach((s: Senateur) => {
+    f.senateurs?.forEach((s: Senateur) => {
       if (!s.province) {
-        votes = votes + s.eloquence + s.chevaliers;
+        votes = votes + s.eloquence + (s.chevaliers ?? 0);
       }
     });
     f.votes = votes;
@@ -74,7 +74,7 @@ export class FactionService {
    * @param c: Carte
    */
   public attribueConcession(f: Faction, c: Concession) {
-    const senMoinsConcessions = f.senateurs.reduce(
+    const senMoinsConcessions = f.senateurs?.reduce(
       (previous: Senateur, current: Senateur) => {
         const pl = previous.concessions ? previous.concessions.length : 0;
         if (!current.concessions || current.concessions.length < pl) {
@@ -84,13 +84,13 @@ export class FactionService {
         }
       }
     );
-    const nbConcessions = senMoinsConcessions.concessions
+    const nbConcessions = senMoinsConcessions?.concessions
       ? senMoinsConcessions.concessions.length
       : 0;
-    const sensMoinsConcessions = f.senateurs.filter((sen: Senateur) => {
+    const sensMoinsConcessions = f.senateurs?.filter((sen: Senateur) => {
       return sen.concessions && sen.concessions.length === nbConcessions;
     });
-    if (sensMoinsConcessions.length > 1) {
+    if (sensMoinsConcessions && sensMoinsConcessions.length > 1) {
       const senMinConcessionsPlusInfluent = sensMoinsConcessions.reduce(
         (previous: Senateur, current: Senateur) => {
           if (current.influence > previous.influence) {
@@ -100,22 +100,22 @@ export class FactionService {
           }
         }
       );
-      senMinConcessionsPlusInfluent.concessions.push(c);
+      senMinConcessionsPlusInfluent.concessions?.push(c);
     } else {
-      senMoinsConcessions.concessions.push(c);
+      senMoinsConcessions?.concessions?.push(c);
     }
   }
 
   public retireSenateurMort(senateursMorts: number[]): string[] {
     const factions = this._factions.getValue();
-    const result = [];
+    const result: string[] = [];
     senateursMorts.forEach((sin: number) => {
       factions.forEach((f: Faction) => {
-        const sen = f.senateurs.find((s: Senateur) => {
+        const sen = f.senateurs?.find((s: Senateur) => {
           return s.in === sin;
         });
         if (sen) {
-          const sens = f.senateurs.filter((s: Senateur) => s.in !== sen.in);
+          const sens = f.senateurs?.filter((s: Senateur) => s.in !== sen.in);
           f.senateurs = sens;
           let msg = 'Le sénateur ' +
             sen.nom +
@@ -161,7 +161,7 @@ export class FactionService {
     const factions = this._factions.getValue();
     factions.forEach((f: Faction) => {
       if (f.id !== faction.id) {
-        jouable = (f.senateurs.find((sen: Senateur) => {
+        jouable = (f.senateurs?.find((sen: Senateur) => {
         // Un adversaire controle la carte famille apparentée ?
         const test1 = sen.in === he.in;
         // Un homme d'état de la même famille avec le même IN est déjà en jeu
@@ -175,11 +175,11 @@ export class FactionService {
   }
 
   public joueHommeDetat(he: Senateur, faction: Faction) {
-    const senHe = faction.senateurs.find((sen: Senateur) => sen.in === he.in);
+    const senHe = faction.senateurs?.find((sen: Senateur) => sen.in === he.in);
     if (senHe) {
       // La famille est déjà contrôlée
       he.influence = Math.max(he.influence, senHe.influence);
-      he.popularite = Math.max(he.popularite, senHe.popularite);
+      he.popularite = Math.max(he.popularite ?? 0, senHe.popularite ?? 0);
       he.province = senHe.province;
       he.concessions = senHe.concessions;
       he.tresor = senHe.tresor;
@@ -195,16 +195,22 @@ export class FactionService {
       const senApp = this.romeService.senateurApparenteHE(he);
       if (senApp) {
         this.romeService.prendreForum(senApp);
-        faction.senateurs.push(senApp);
+        faction.senateurs?.push(senApp);
       }
     }
-    faction.senateurs.push(he);
+    faction.senateurs?.push(he);
   }
 
   public initFactions() {
     const factions: Faction[] = [];
     for (let index = 0; index < 5; index++) {
-      const f: Faction = { nom: 'Belcarus', cartes: [], tresor: 0 };
+      const f: Faction = {
+        nom: 'Belcarus', cartes: [], tresor: 0,
+        votes: 0,
+        senateurs: [],
+        chef: 0,
+        suivant: TypeFaction.JOUEUR
+      };
       f.senateurs = this.romeService.getRandomSenateurs(3);
       factions.push(f);
     }
@@ -268,7 +274,7 @@ export class FactionService {
     });
     factions.forEach((f: Faction) => {
       if (f.id === TypeFaction.CONSERVATEURS) {
-        f.senateurs = f.senateurs.concat(
+        f.senateurs = f.senateurs?.concat(
           this.romeService.getRandomSenateurs(2)
         );
       } else if (f.id === TypeFaction.POPULISTES) {
@@ -329,7 +335,7 @@ export class FactionService {
 
   public setChefDeFaction(faction: Faction) {
     let chef: number;
-    let cdf: Senateur;
+    let cdf: Senateur | undefined;
     if (
       faction.id === TypeFaction.CONSERVATEURS ||
       faction.id === TypeFaction.PLOUTOCRATES
@@ -378,24 +384,24 @@ export class FactionService {
       faction.senateurs[1].province = this.romeService.prendreProvince();
     }
     // TMP Tests
-    if (cdf) {
+    if (cdf !== undefined) {
       cdf.chef = true;
      cdf.province = this.romeService.prendreProvince();
     }
   }
 
   public retourGouverneurs(): string[] {
-    const msg = [];
+    const msg: string[] = [];
     const factions: Faction[] = this._factions.getValue();
     factions.forEach((faction: Faction) => {
       faction.senateurs.forEach((sen: Senateur) => {
-        if (sen.province && sen.province.mandat > 1) {
+        if (sen.province?.mandat && sen.province.mandat > 1) {
           sen.province.mandat -= 1;
         } else if (sen.province && sen.province.mandat === 1) {
           msg.push('Le sénateur ' + sen.nom + ' rend sa province ' + sen.province.nom + ' et retourne à Rome');
           sen.province.mandat -= 1;
           this.romeService.ajouterForum(sen.province);
-          sen.province = undefined;
+          sen.province = null;
           this.updateVotes(faction);
         }
       });
@@ -426,8 +432,8 @@ export class FactionService {
 
   public getSPHR(): any {
     const factions: Faction[] = this._factions.getValue();
-    let fsphr: Faction;
-    let sphr: Senateur;
+    let fsphr: Faction | undefined;
+    let sphr: Senateur | undefined;
     factions.forEach((f: Faction) => {
       const s = f.senateurs
       .filter((sen: Senateur) => !sen.province)

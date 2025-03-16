@@ -42,12 +42,12 @@ export enum TypeIntrigue {
 export interface Faction {
   id?: TypeFaction;
   nom: string;
-  votes?: number;
-  senateurs?: Senateur[];
-  chef?: number;
-  cartes?: Carte[];
+  votes: number;
+  senateurs: Senateur[];
+  chef: number;
+  cartes: Carte[];
   tresor: number;
-  suivant?: TypeFaction;
+  suivant: TypeFaction;
 }
 
 export interface Charge {
@@ -67,15 +67,15 @@ export interface Senateur extends Carte {
   loyauteNulle?: string[];
   militaire: number;
   influence: number;
-  popularite?: number;
+  popularite: number;
   chef?: boolean;
-  corrompu?: boolean;
-  tresor?: number;
-  chevaliers?: number;
-  charge?: Charge;
+  corrompu: boolean;
+  tresor: number;
+  chevaliers: number;
+  charge: Charge;
   ancienConsul?: boolean;
   concessions?: Concession[];
-  province?: Province;
+  province: Province | null;
   rebelle?: boolean;
 }
 export interface Concession extends Carte {
