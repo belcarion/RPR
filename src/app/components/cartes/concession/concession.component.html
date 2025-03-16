@@ -1,12 +1,12 @@
-@for (concession of concessions; track concession) {
+@for (concession of concessions(); track concession) {
   <div class="fx-center-start carte">
-    @if (!displayH) {
+    @if (!displayH()) {
       <div class="fx-column">
         <div>{{concession.nom}}</div>
         <div> ({{concession.revenu}} T/tour)</div>
       </div>
     }
-    @if (displayH) {
+    @if (displayH()) {
       <div class="fx-row">
         <div>{{concession.nom}}</div>
         <div> ({{concession.revenu}} T/tour)</div>

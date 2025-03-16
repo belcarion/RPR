@@ -4,7 +4,7 @@
     <div class="fx-row fx-gap-10">
       <div>{{province.nom}}</div>
       <div>Mandat: {{province.mandat}}</div>
-      @if (displayH) {
+      @if (displayH()) {
         <div class="fx-row fx-gap-10">
           <div>F. mil.: {{province.forceMilitaire[province.developpee]}}</div>
           <div>F. nav.: {{province.forceNavale[province.developpee]}}</div>
@@ -12,7 +12,7 @@
         </div>
       }
     </div>
-    @if (!displayH) {
+    @if (!displayH()) {
       <div>
         <div>Force militaire: {{province.forceMilitaire[province.developpee]}}</div>
         <div>Force navale: {{province.forceNavale[province.developpee]}}</div>

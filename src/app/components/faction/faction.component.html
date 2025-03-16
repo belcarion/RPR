@@ -1,11 +1,11 @@
 <div class="faction">
   <div class="faction-statut" class="fx-row fx-gap-40">
-    <div>{{faction.nom}}</div>
-    <div class="fx-row"><span>Trésor : {{ faction.tresor }}</span></div>
-    <div class="fx-row">Votes : {{ faction.votes }}</div>
+    <div>{{faction().nom}}</div>
+    <div class="fx-row"><span>Trésor : {{ faction().tresor }}</span></div>
+    <div class="fx-row">Votes : {{ faction().votes }}</div>
     <div class="fx-row">Cartes :</div>
     <mat-select style="width: 120px">
-      @for (carte of faction.cartes; track carte) {
+      @for (carte of faction().cartes; track carte) {
         <mat-option>
           {{ carte.nom}}
         </mat-option>
@@ -13,7 +13,7 @@
     </mat-select>
   </div>
 
-  <table mat-table [dataSource]="faction.senateurs" multiTemplateDataRows class="mat-elevation-z8">
+  <table mat-table [dataSource]="faction().senateurs" multiTemplateDataRows class="mat-elevation-z8">
     <ng-container matColumnDef="nom">
       <th class="col-nom" mat-header-cell *matHeaderCellDef> Nom </th>
       <td class="col-nom" mat-cell *matCellDef="let senateur"> {{senateur.nom}} </td>

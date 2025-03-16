@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, inject } from '@angular/core';
+import { Component, OnInit, inject, output } from '@angular/core';
 import { FactionService } from 'src/app/services/faction.service';
 import { Faction, Senateur, TypeFaction } from 'src/app/data.interface';
 import { PhaseRevenusService } from 'src/app/services/phase-revenus.service';
@@ -21,7 +21,7 @@ export class PhaseRevenuComponent implements OnInit {
   private phaseRevenusService = inject(PhaseRevenusService);
   private romeService = inject(RomeService);
 
-  @Output() fin: EventEmitter<boolean> = new EventEmitter<boolean>();
+  readonly fin = output<boolean>();
 
   public etape = 0;
   public faction: Faction;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { Senateur } from 'src/app/data.interface';
 
 import { ProvinceComponent } from '../cartes/province/province.component';
@@ -11,7 +11,7 @@ import { ConcessionComponent } from '../cartes/concession/concession.component';
     imports: [ProvinceComponent, ConcessionComponent]
 })
 export class ForumComponent implements OnInit {
-@Input() forum: Senateur[];
+readonly forum = input<Senateur[]>(undefined);
 
   constructor() { }
 

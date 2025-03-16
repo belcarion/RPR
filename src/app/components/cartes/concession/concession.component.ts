@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { Concession } from 'src/app/data.interface';
 
 
@@ -10,8 +10,8 @@ import { Concession } from 'src/app/data.interface';
 })
 export class ConcessionComponent implements OnInit {
 
-  @Input() concessions: Concession[];
-  @Input() displayH: boolean;
+  readonly concessions = input<Concession[]>(undefined);
+  readonly displayH = input<boolean>(undefined);
 
   constructor() { }
 

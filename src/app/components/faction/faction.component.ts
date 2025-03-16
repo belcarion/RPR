@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, inject } from '@angular/core';
+import { Component, OnInit, inject, input } from '@angular/core';
 import { Senateur, Faction } from 'src/app/data.interface';
 import { FactionService } from 'src/app/services/faction.service';
 import { trigger, state, transition, animate, style } from '@angular/animations';
@@ -26,7 +26,7 @@ export class FactionComponent implements OnInit {
   private factionService = inject(FactionService);
 
 
-  @Input() faction: Faction;
+  readonly faction = input<Faction>(undefined);
   public tresor = 0;
   public influence = 0;
   public columnsToDisplay = ['nom', 'charge', 'militaire', 'loyaute', 'eloquence', 'influence', 'popularite', 'tresor', 'chevaliers'];

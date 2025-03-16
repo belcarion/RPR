@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, inject } from '@angular/core';
+import { Component, OnInit, inject, output } from '@angular/core';
 import { PhaseForumService } from 'src/app/services/phase-forum.service';
 import { FactionService } from 'src/app/services/faction.service';
 import { Faction, TypeFaction } from 'src/app/data.interface';
@@ -15,7 +15,7 @@ export class PhaseForumComponent implements OnInit {
   private phaseForumService = inject(PhaseForumService);
   private factionService = inject(FactionService);
 
-  @Output() fin: EventEmitter<boolean> = new EventEmitter<boolean>();
+  readonly fin = output<boolean>();
   public result: string[];
   public factions: Faction[];
   public factionJouant: Faction;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, inject } from '@angular/core';
+import { Component, OnInit, inject, output } from '@angular/core';
 import { PhaseMortaliteService } from 'src/app/services/phase-mortalite.service';
 import { MatButton } from '@angular/material/button';
 
@@ -12,7 +12,7 @@ import { MatButton } from '@angular/material/button';
 export class PhaseMortaliteComponent implements OnInit {
   private phaseMortaliteService = inject(PhaseMortaliteService);
 
-  @Output() fin: EventEmitter<boolean> = new EventEmitter<boolean>();
+  readonly fin = output<boolean>();
   public result: string[] = [];
 
   ngOnInit() {

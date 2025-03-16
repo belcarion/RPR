@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, input } from '@angular/core';
 import { Province } from 'src/app/data.interface';
 import { NgClass } from '@angular/common';
 
@@ -10,8 +10,11 @@ import { NgClass } from '@angular/common';
 })
 export class ProvinceComponent implements OnInit {
 
+  // TODO: Skipped for migration because:
+  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+  //  and migrating would break narrowing currently.
   @Input()  province: Province;
-  @Input() displayH: boolean;
+  readonly displayH = input<boolean>(undefined);
 
   constructor() { }
 
