@@ -1,14 +1,14 @@
-import { Injectable, inject } from "@angular/core";
-import { FactionService } from "./faction.service";
+import { inject, Injectable } from '@angular/core';
+
+import { FactionService } from './faction.service';
 import { RomeService } from './rome.service';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class PhaseMortaliteService {
   private factionService = inject(FactionService);
   private romeService = inject(RomeService);
-
 
   private testMortalite(): number[] {
     const sen = this.romeService.getRandomNumber(36);
@@ -28,7 +28,7 @@ export class PhaseMortaliteService {
 
   public resolutionMortalite(): string[] {
     const senateursMorts = this.testMortalite();
-    console.log("sénateurs morts = ", JSON.stringify(senateursMorts));
+    console.log('sénateurs morts = ', JSON.stringify(senateursMorts));
     return this.factionService.retireSenateurMort(senateursMorts);
   }
 }

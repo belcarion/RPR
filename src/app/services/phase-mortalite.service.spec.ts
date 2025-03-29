@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { PhaseMortaliteService } from './phase-mortalite.service';
+
 import { FactionService } from './faction.service';
+import { PhaseMortaliteService } from './phase-mortalite.service';
 import { RomeService } from './rome.service';
 
 describe('PhaseMortaliteService', () => {
@@ -12,11 +13,10 @@ describe('PhaseMortaliteService', () => {
     romeServiceSpy = jasmine.createSpyObj('RomeService', ['getRandomNumber']);
     factionServiceSpy = jasmine.createSpyObj('FactionService', ['retireSenateurMort']);
     TestBed.configureTestingModule({
-
       providers: [
         { provide: FactionService, useValue: factionServiceSpy },
-        { provide: RomeService, useValue: romeServiceSpy }
-      ]
+        { provide: RomeService, useValue: romeServiceSpy },
+      ],
     });
     service = TestBed.inject(PhaseMortaliteService);
   });

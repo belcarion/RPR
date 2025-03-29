@@ -1,15 +1,14 @@
-import { Component, OnInit, inject, output } from '@angular/core';
-import { PhaseForumService } from 'src/app/services/phase-forum.service';
-import { FactionService } from 'src/app/services/faction.service';
-import { Faction, TypeFaction } from 'src/app/data.interface';
+import { Component, inject, OnInit, output } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-
+import { Faction, TypeFaction } from 'src/app/data.interface';
+import { FactionService } from 'src/app/services/faction.service';
+import { PhaseForumService } from 'src/app/services/phase-forum.service';
 
 @Component({
-    selector: 'app-phase-forum',
-    templateUrl: './phase-forum.component.html',
-    styleUrls: ['./phase-forum.component.scss'],
-    imports: [MatButton]
+  selector: 'app-phase-forum',
+  templateUrl: './phase-forum.component.html',
+  styleUrls: ['./phase-forum.component.scss'],
+  imports: [MatButton],
 })
 export class PhaseForumComponent implements OnInit {
   private phaseForumService = inject(PhaseForumService);
@@ -23,20 +22,17 @@ export class PhaseForumComponent implements OnInit {
   constructor() {
     const factionService = this.factionService;
 
-    factionService.getFactions()
-      .subscribe((f: Faction[]) => {
-        this.factions = f;
-      });
+    factionService.getFactions().subscribe((f: Faction[]) => {
+      this.factions = f;
+    });
   }
 
   ngOnInit() {
     this.factionJouant = this.factionService.getSPHR().faction;
-    this.result = this.phaseForumService.tentativePersuasion(
-      this.factionService.getFaction(TypeFaction.JOUEUR));
+    this.result = this.phaseForumService.tentativePersuasion(this.factionService.getFaction(TypeFaction.JOUEUR));
   }
 
   public suivant() {
     this.fin.emit(true);
   }
-
 }

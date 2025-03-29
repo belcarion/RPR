@@ -1,4 +1,4 @@
-import { ProvinceId, GuerreId } from './data/cartes.data';
+import { GuerreId, ProvinceId } from './data/cartes.data';
 
 //////////////////////////
 // Enums
@@ -9,14 +9,14 @@ export enum TypeCharge {
   MAITRE_DE_CAVALERIE = 'Maitre de cavalerie',
   DICTATEUR = 'Dictateur',
   CENSEUR = 'Censeur',
-  PROCONSUL = 'Proconsul'
+  PROCONSUL = 'Proconsul',
 }
 export enum TypeFaction {
   JOUEUR = 'joueur',
   IMPERIALISTES = 'Impérialistes',
   PLOUTOCRATES = 'Ploutocrates',
   CONSERVATEURS = 'Conservateurs',
-  POPULISTES = 'Populistes'
+  POPULISTES = 'Populistes',
 }
 export enum TypeCarte {
   INTRIGUE = 'intrigue',
@@ -27,7 +27,7 @@ export enum TypeCarte {
   CONFLIT = 'conflit',
   CHEFENNEMI = 'chefennemi',
   GUERRE = 'guerre',
-  PROVINCE = 'province'
+  PROVINCE = 'province',
 }
 export enum TypeIntrigue {
   INTRIGUE_D_ALCOVE,
@@ -35,7 +35,7 @@ export enum TypeIntrigue {
   TRIBUN,
   ESCORTE_SECRETE,
   ASSASSINAT,
-  CHANTAGE
+  CHANTAGE,
 }
 //////////////////////////
 // Interfaces

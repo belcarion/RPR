@@ -1,20 +1,19 @@
-import { Component, OnInit, inject, output } from '@angular/core';
-import { FactionService } from 'src/app/services/faction.service';
-import { Faction, Senateur, TypeFaction } from 'src/app/data.interface';
-import { PhaseRevenusService } from 'src/app/services/phase-revenus.service';
-import { MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox';
-import { RomeService } from 'src/app/services/rome.service';
+import { Component, inject, OnInit, output } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-
+import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
+import { Faction, Senateur, TypeFaction } from 'src/app/data.interface';
+import { FactionService } from 'src/app/services/faction.service';
+import { PhaseRevenusService } from 'src/app/services/phase-revenus.service';
+import { RomeService } from 'src/app/services/rome.service';
 
 // spoliation/développement province
 // redistribution
 // contributions
 @Component({
-    selector: 'app-phase-revenu',
-    templateUrl: './phase-revenu.component.html',
-    styleUrls: ['./phase-revenu.component.scss'],
-    imports: [MatButton, MatCheckbox]
+  selector: 'app-phase-revenu',
+  templateUrl: './phase-revenu.component.html',
+  styleUrls: ['./phase-revenu.component.scss'],
+  imports: [MatButton, MatCheckbox],
 })
 export class PhaseRevenuComponent implements OnInit {
   private factionService = inject(FactionService);
@@ -103,5 +102,4 @@ export class PhaseRevenuComponent implements OnInit {
     this.phaseRevenusService.contribution(v, senateur);
     this.result = this.phaseRevenusService.contributionsNeutres(this.contribution);
   }
-
 }

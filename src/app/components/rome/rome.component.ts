@@ -1,16 +1,16 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Carte, Legion, Escadre, Senateur, Concession } from 'src/app/data.interface';
+import { Component, inject, OnInit } from '@angular/core';
+import { combineLatest } from 'rxjs';
+import { Carte, Concession, Escadre, Legion, Senateur } from 'src/app/data.interface';
 import { RomeService } from 'src/app/services/rome.service';
-import { combineLatest, BehaviorSubject } from 'rxjs';
-import { ForumComponent } from '../forum/forum.component';
 
 import { ConcessionComponent } from '../cartes/concession/concession.component';
+import { ForumComponent } from '../forum/forum.component';
 
 @Component({
-    selector: 'app-rome',
-    templateUrl: './rome.component.html',
-    styleUrls: ['./rome.component.scss'],
-    imports: [ForumComponent, ConcessionComponent]
+  selector: 'app-rome',
+  templateUrl: './rome.component.html',
+  styleUrls: ['./rome.component.scss'],
+  imports: [ForumComponent, ConcessionComponent],
 })
 export class RomeComponent implements OnInit {
   private romeService = inject(RomeService);
@@ -34,7 +34,7 @@ export class RomeComponent implements OnInit {
       this.romeService.getForum(),
       this.romeService.getTresor(),
       this.romeService.getLegionsActives(),
-      romeService.getEscadresActives()
+      romeService.getEscadresActives(),
     ]).subscribe(
       ([ce, rs, cd, forum, tresor, l, e]: [
         Carte[],
@@ -43,7 +43,7 @@ export class RomeComponent implements OnInit {
         Carte[],
         number,
         Legion[],
-        Escadre[]
+        Escadre[],
       ]) => {
         this.chefsEnnemis = ce;
         this.releveSenatoriale = rs;
@@ -52,7 +52,7 @@ export class RomeComponent implements OnInit {
         this.tresor = tresor;
         this.legions = l;
         this.escadres = e;
-      }
+      },
     );
   }
 

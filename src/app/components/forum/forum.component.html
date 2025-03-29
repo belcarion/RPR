@@ -2,13 +2,13 @@
   <div class="fx-column fx-center-start">
     @if (f.type === 'guerre') {
       <div class="carte">
-        <div>{{f.nom}}</div>
+        <div>{{ f.nom }}</div>
       </div>
     }
     @if (f.type === 'senateur') {
-      <div  class="carte">
-        <div>{{f.nom}}</div>
-        <div>Elo: {{f.loyaute}}   Inf: {{f.influence}}   Mil: {{f.militaire}}   Trésor: {{f.tresor}}</div>
+      <div class="carte">
+        <div>{{ f.nom }}</div>
+        <div>Elo: {{ f.loyaute }} Inf: {{ f.influence }} Mil: {{ f.militaire }} Trésor: {{ f.tresor }}</div>
       </div>
     }
     @if (f.type === 'province') {

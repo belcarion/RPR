@@ -1,28 +1,18 @@
-import { Injectable, inject } from '@angular/core';
-import {
-  Senateur,
-  Faction,
-  Carte,
-  TypeFaction,
-  Charge,
-  TypeCarte,
-  Concession,
-  TypeCharge
-} from '../data.interface';
-import { RomeService } from './rome.service';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+import { Carte, Concession, Faction, Senateur, TypeCarte, TypeCharge, TypeFaction } from '../data.interface';
+import { RomeService } from './rome.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FactionService {
   private romeService = inject(RomeService);
   private snackBar = inject(MatSnackBar);
 
-  private _factions: BehaviorSubject<Faction[]> = new BehaviorSubject<
-    Faction[]
-  >([]);
+  private _factions: BehaviorSubject<Faction[]> = new BehaviorSubject<Faction[]>([]);
 
   constructor() {
     this.initFactions();
@@ -66,7 +56,6 @@ export class FactionService {
     f.votes = votes;
   }
 
-
   /**
    * quand un neutre
    * choisit une concession, elle doit être donnée à son
@@ -77,32 +66,26 @@ export class FactionService {
    * @param c: Carte
    */
   public attribueConcession(f: Faction, c: Concession) {
-    const senMoinsConcessions = f.senateurs?.reduce(
-      (previous: Senateur, current: Senateur) => {
-        const pl = previous.concessions ? previous.concessions.length : 0;
-        if (!current.concessions || current.concessions.length < pl) {
-          return current;
-        } else {
-          return previous;
-        }
+    const senMoinsConcessions = f.senateurs?.reduce((previous: Senateur, current: Senateur) => {
+      const pl = previous.concessions ? previous.concessions.length : 0;
+      if (!current.concessions || current.concessions.length < pl) {
+        return current;
+      } else {
+        return previous;
       }
-    );
-    const nbConcessions = senMoinsConcessions?.concessions
-      ? senMoinsConcessions.concessions.length
-      : 0;
+    });
+    const nbConcessions = senMoinsConcessions?.concessions ? senMoinsConcessions.concessions.length : 0;
     const sensMoinsConcessions = f.senateurs?.filter((sen: Senateur) => {
       return sen.concessions && sen.concessions.length === nbConcessions;
     });
     if (sensMoinsConcessions && sensMoinsConcessions.length > 1) {
-      const senMinConcessionsPlusInfluent = sensMoinsConcessions.reduce(
-        (previous: Senateur, current: Senateur) => {
-          if (current.influence > previous.influence) {
-            return current;
-          } else {
-            return previous;
-          }
+      const senMinConcessionsPlusInfluent = sensMoinsConcessions.reduce((previous: Senateur, current: Senateur) => {
+        if (current.influence > previous.influence) {
+          return current;
+        } else {
+          return previous;
         }
-      );
+      });
       senMinConcessionsPlusInfluent.concessions?.push(c);
     } else {
       senMoinsConcessions?.concessions?.push(c);
@@ -120,11 +103,7 @@ export class FactionService {
         if (sen) {
           const sens = f.senateurs?.filter((s: Senateur) => s.in !== sen.in);
           f.senateurs = sens;
-          let msg = 'Le sénateur ' +
-            sen.nom +
-            ' de la faction ' +
-            f.nom +
-            ' décède.';
+          let msg = 'Le sénateur ' + sen.nom + ' de la faction ' + f.nom + ' décède.';
           if (sen.concessions) {
             sen.concessions.forEach((concession: Carte) => {
               msg += ' La concession ' + concession.nom + ' retourne au forum.';
@@ -132,9 +111,9 @@ export class FactionService {
             });
           }
           if (sen.province) {
-              msg += ' La province ' + sen.province.nom + ' retourne au forum.';
-              sen.province.mandat = 0;
-              this.romeService.ajouterForum(sen.province);
+            msg += ' La province ' + sen.province.nom + ' retourne au forum.';
+            sen.province.mandat = 0;
+            this.romeService.ajouterForum(sen.province);
           }
           if (!sen.chef) {
             this.romeService.addReleveSenatoriale(sen);
@@ -164,14 +143,15 @@ export class FactionService {
     const factions = this._factions.getValue();
     factions.forEach((f: Faction) => {
       if (f.id !== faction.id) {
-        jouable = (f.senateurs?.find((sen: Senateur) => {
-        // Un adversaire controle la carte famille apparentée ?
-        const test1 = sen.in === he.in;
-        // Un homme d'état de la même famille avec le même IN est déjà en jeu
-        // Exception: 25 A/B ou 29A/B => scenarii moyenne et basse république
-        const test2 = sen.inA && sen.in === he.in;
-        return test1 || test2;
-        }) === undefined);
+        jouable =
+          f.senateurs?.find((sen: Senateur) => {
+            // Un adversaire controle la carte famille apparentée ?
+            const test1 = sen.in === he.in;
+            // Un homme d'état de la même famille avec le même IN est déjà en jeu
+            // Exception: 25 A/B ou 29A/B => scenarii moyenne et basse république
+            const test2 = sen.inA && sen.in === he.in;
+            return test1 || test2;
+          }) === undefined;
       }
     });
     return jouable;
@@ -191,7 +171,7 @@ export class FactionService {
       he.chevaliers = senHe.chevaliers;
       he.corrompu = senHe.corrompu;
       he.charge = senHe.charge;
-      const msg = 'La faction ' + faction.nom + ' contrôle déjà la famille de l\'homme d\'état qu\'elle joue';
+      const msg = 'La faction ' + faction.nom + " contrôle déjà la famille de l'homme d'état qu'elle joue";
       this.snackBar.open(msg, '', { duration: 2000, verticalPosition: 'top' });
     } else {
       // si carte au forum la prendre
@@ -208,11 +188,13 @@ export class FactionService {
     const factions: Faction[] = [];
     for (let index = 0; index < 5; index++) {
       const f: Faction = {
-        nom: 'Belcarus', cartes: [], tresor: 0,
+        nom: 'Belcarus',
+        cartes: [],
+        tresor: 0,
         votes: 0,
         senateurs: [],
         chef: 0,
-        suivant: TypeFaction.JOUEUR
+        suivant: TypeFaction.JOUEUR,
       };
       f.senateurs = this.romeService.getRandomSenateurs(3);
       factions.push(f);
@@ -223,10 +205,7 @@ export class FactionService {
     const ploutocrates = factions
       .filter((f: Faction) => !f.id)
       .reduce((previous: Faction, current: Faction) => {
-        if (
-          this.getTotalAptitude(current, 'influence') >
-          this.getTotalAptitude(previous, 'influence')
-        ) {
+        if (this.getTotalAptitude(current, 'influence') > this.getTotalAptitude(previous, 'influence')) {
           return current;
         } else {
           return previous;
@@ -239,10 +218,7 @@ export class FactionService {
     const imp = factions
       .filter((f: Faction) => !f.id)
       .reduce((previous: Faction, current: Faction) => {
-        if (
-          this.getTotalAptitude(current, 'militaire') >
-          this.getTotalAptitude(previous, 'militaire')
-        ) {
+        if (this.getTotalAptitude(current, 'militaire') > this.getTotalAptitude(previous, 'militaire')) {
           return current;
         } else {
           return previous;
@@ -255,10 +231,7 @@ export class FactionService {
     const conservateurs = factions
       .filter((f: Faction) => !f.id)
       .reduce((previous: Faction, current: Faction) => {
-        if (
-          this.getTotalAptitude(current, 'influence') <
-          this.getTotalAptitude(previous, 'influence')
-        ) {
+        if (this.getTotalAptitude(current, 'influence') < this.getTotalAptitude(previous, 'influence')) {
           return current;
         } else {
           return previous;
@@ -277,20 +250,16 @@ export class FactionService {
     });
     factions.forEach((f: Faction) => {
       if (f.id === TypeFaction.CONSERVATEURS) {
-        f.senateurs = f.senateurs?.concat(
-          this.romeService.getRandomSenateurs(2)
-        );
+        f.senateurs = f.senateurs?.concat(this.romeService.getRandomSenateurs(2));
       } else if (f.id === TypeFaction.POPULISTES) {
-        f.senateurs = f.senateurs.concat(
-          this.romeService.getRandomSenateurs(1)
-        );
+        f.senateurs = f.senateurs.concat(this.romeService.getRandomSenateurs(1));
       } else if (f.id === TypeFaction.PLOUTOCRATES) {
         f.senateurs.reduce((previous: Senateur, current: Senateur) => {
           if (current.influence >= previous.influence) {
             current.charge = { rang: 2, nom: TypeCharge.CONSUL_DE_ROME };
             current.influence += 5;
             current.ancienConsul = true;
-            previous.charge =  { rang: 7, nom: TypeCharge.SANS };
+            previous.charge = { rang: 7, nom: TypeCharge.SANS };
             // this.consulDeRome = current;
             return current;
           } else {
@@ -303,7 +272,7 @@ export class FactionService {
     factions.forEach((f: Faction) => {
       let nbCartesPiochees = 0,
         c: Carte;
-        console.log('Pioche pour faction = ', f.nom);
+      console.log('Pioche pour faction = ', f.nom);
       do {
         c = this.romeService.prendreDansPioche();
         console.log('carte piochée = ', c.nom);
@@ -339,48 +308,36 @@ export class FactionService {
   public setChefDeFaction(faction: Faction) {
     let chef: number;
     let cdf: Senateur | undefined;
-    if (
-      faction.id === TypeFaction.CONSERVATEURS ||
-      faction.id === TypeFaction.PLOUTOCRATES
-    ) {
+    if (faction.id === TypeFaction.CONSERVATEURS || faction.id === TypeFaction.PLOUTOCRATES) {
       // Sénateur à la plus grande influence
-      cdf = faction.senateurs.reduce(
-        (previous: Senateur, current: Senateur) => {
-          if (current.influence > previous.influence) {
-            chef = current.in;
-            return current;
-          } else {
-            return previous;
-          }
+      cdf = faction.senateurs.reduce((previous: Senateur, current: Senateur) => {
+        if (current.influence > previous.influence) {
+          chef = current.in;
+          return current;
+        } else {
+          return previous;
         }
-      );
+      });
     } else if (faction.id === TypeFaction.IMPERIALISTES) {
       // Sénateur à la plus grande aptitude militaire
-      cdf = faction.senateurs.reduce(
-        (previous: Senateur, current: Senateur) => {
-          if (current.militaire > previous.militaire) {
-            chef = current.in;
-            return current;
-          } else {
-            return previous;
-          }
+      cdf = faction.senateurs.reduce((previous: Senateur, current: Senateur) => {
+        if (current.militaire > previous.militaire) {
+          chef = current.in;
+          return current;
+        } else {
+          return previous;
         }
-      );
+      });
     } else if (faction.id === TypeFaction.POPULISTES) {
       // Sénateur à la plus grande aptitude militaire
-      cdf = faction.senateurs.reduce(
-        (previous: Senateur, current: Senateur) => {
-          if (
-            current.influence + current.popularite >
-            previous.influence + previous.popularite
-          ) {
-            chef = current.in;
-            return current;
-          } else {
-            return previous;
-          }
+      cdf = faction.senateurs.reduce((previous: Senateur, current: Senateur) => {
+        if (current.influence + current.popularite > previous.influence + previous.popularite) {
+          chef = current.in;
+          return current;
+        } else {
+          return previous;
         }
-      );
+      });
     } else if (faction.id === TypeFaction.JOUEUR) {
       faction.senateurs[0].chef = true;
       faction.senateurs[0].province = this.romeService.prendreProvince();
@@ -389,7 +346,7 @@ export class FactionService {
     // TMP Tests
     if (cdf !== undefined) {
       cdf.chef = true;
-     cdf.province = this.romeService.prendreProvince();
+      cdf.province = this.romeService.prendreProvince();
     }
   }
 
@@ -439,13 +396,13 @@ export class FactionService {
     let sphr: Senateur | undefined;
     factions.forEach((f: Faction) => {
       const s = f.senateurs
-      .filter((sen: Senateur) => !sen.province)
-      .reduce((prev: Senateur, curr: Senateur) => {
-        if (curr.charge.rang > prev.charge.rang) {
-          return curr;
-        }
-        return prev;
-      });
+        .filter((sen: Senateur) => !sen.province)
+        .reduce((prev: Senateur, curr: Senateur) => {
+          if (curr.charge.rang > prev.charge.rang) {
+            return curr;
+          }
+          return prev;
+        });
       if (!sphr || s.charge.rang > sphr.charge.rang) {
         sphr = s;
         fsphr = f;
@@ -455,14 +412,14 @@ export class FactionService {
       // Si aucun, sénateur le plus influent
       factions.forEach((f: Faction) => {
         const s = f.senateurs
-        .filter((sen: Senateur) => !sen.province)
-        .reduce((previous: Senateur, current: Senateur) => {
-          if (current.influence >= previous.influence) {
-            return current;
-          } else {
-            return previous;
-          }
-        });
+          .filter((sen: Senateur) => !sen.province)
+          .reduce((previous: Senateur, current: Senateur) => {
+            if (current.influence >= previous.influence) {
+              return current;
+            } else {
+              return previous;
+            }
+          });
         if (!sphr || s.influence > sphr.influence) {
           sphr = s;
           fsphr = f;
@@ -471,5 +428,4 @@ export class FactionService {
     }
     return { sphr: sphr, faction: fsphr };
   }
-
 }

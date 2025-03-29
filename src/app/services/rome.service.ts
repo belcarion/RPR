@@ -1,43 +1,27 @@
 import { Injectable } from '@angular/core';
-import { SENATEURS, HOMMESDETAT } from '../data/senateurs.data';
-import { Observable, BehaviorSubject } from 'rxjs';
-import {
-  Senateur,
-  Carte,
-  TypeCarte,
-  Guerre,
-  Province,
-  Legion,
-  Charge,
-  Escadre,
-  TypeCharge
-} from '../data.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+import { Carte, Escadre, Guerre, Legion, Province, Senateur, TypeCarte, TypeCharge } from '../data.interface';
+import { CHEFS_ENNEMIS, GuerreId, GUERRES, PROVINCES } from '../data/cartes.data';
 import { CONCESSIONS } from '../data/concessions.data';
 import { INTRIGUES } from '../data/intrigues.data';
-import { GUERRES, PROVINCES, CHEFS_ENNEMIS, GuerreId } from '../data/cartes.data';
+import { HOMMESDETAT, SENATEURS } from '../data/senateurs.data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RomeService {
   private _pioche: Carte[] = [];
   // private pioche: BehaviorSubject<Carte[]> = new BehaviorSubject<Carte[]>([]);
-  private _chefsEnnemis: BehaviorSubject<Carte[]> = new BehaviorSubject<Carte[]>(
-    []
-  );
-  private _releveSenatoriale: BehaviorSubject<Senateur[]> = new BehaviorSubject<
-    Senateur[]
-  >([]);
-  private _concessionsDetruites: BehaviorSubject<Carte[]> = new BehaviorSubject<
-    Carte[]
-  >([]);
+  private _chefsEnnemis: BehaviorSubject<Carte[]> = new BehaviorSubject<Carte[]>([]);
+  private _releveSenatoriale: BehaviorSubject<Senateur[]> = new BehaviorSubject<Senateur[]>([]);
+  private _concessionsDetruites: BehaviorSubject<Carte[]> = new BehaviorSubject<Carte[]>([]);
   private _tresor: BehaviorSubject<number> = new BehaviorSubject<number>(100);
   private _forum: BehaviorSubject<Carte[]> = new BehaviorSubject<Carte[]>([]);
   private _provinces: BehaviorSubject<Province[]> = new BehaviorSubject<Province[]>([]);
   private _legionsActives: BehaviorSubject<Legion[]> = new BehaviorSubject<Legion[]>([]);
   private _escadresActives: BehaviorSubject<Escadre[]> = new BehaviorSubject<Escadre[]>([]);
   private _guerresActives: BehaviorSubject<Guerre[]> = new BehaviorSubject<Guerre[]>([]);
-
 
   constructor() {
     const senateurs: Senateur[] = SENATEURS.map((sen: Senateur) => {
@@ -48,7 +32,7 @@ export class RomeService {
       sen.corrompu = false;
       sen.ancienConsul = false;
       sen.rebelle = false;
-      sen.charge = { rang: 7, nom: TypeCharge.SANS};
+      sen.charge = { rang: 7, nom: TypeCharge.SANS };
       return sen;
     });
     const hommesEtat: Senateur[] = HOMMESDETAT.map((sen: Senateur) => {
@@ -59,7 +43,7 @@ export class RomeService {
       sen.corrompu = false;
       sen.ancienConsul = false;
       sen.rebelle = false;
-      sen.charge = { rang: 7, nom: TypeCharge.SANS};
+      sen.charge = { rang: 7, nom: TypeCharge.SANS };
       return sen;
     });
     this._pioche = this._pioche.concat(senateurs);
@@ -90,7 +74,7 @@ export class RomeService {
    * Renvoie un nb aléatoire compris entre min et max inclus
    * @param n: number
    */
-  getRandomNumber(max: number, min: number = 1, mod: number = 0): number {
+  getRandomNumber(max: number, min = 1, mod = 0): number {
     return Math.floor(Math.random() * (max - min + 1)) + min + mod;
   }
 
@@ -109,7 +93,7 @@ export class RomeService {
     const provinces = this._provinces.getValue();
     while (!fc) {
       const idx = this.getRandomNumber(provinces.length) - 1;
-        fc = provinces.splice(idx, 1);
+      fc = provinces.splice(idx, 1);
     }
     this._provinces.next(provinces);
     const prov = fc[0] as Province;
@@ -214,7 +198,6 @@ export class RomeService {
     this.majTresor(cga);
     this.majTresor(cfa);
     // lois agraires*
-    return ['Rome paie ' + cga + ' T pour les guerres actives, '
-    + cfa + ' T pour les forces non rebelles.'];
+    return ['Rome paie ' + cga + ' T pour les guerres actives, ' + cfa + ' T pour les forces non rebelles.'];
   }
 }

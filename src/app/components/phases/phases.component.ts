@@ -1,22 +1,21 @@
-import { Component, OnInit, inject } from "@angular/core";
+import { Component, inject, OnInit } from '@angular/core';
 import { PhaseMortaliteService } from 'src/app/services/phase-mortalite.service';
 import { PhaseRevenusService } from 'src/app/services/phase-revenus.service';
 import { Phase } from 'src/app/services/tour.service';
 
-import { PhaseMortaliteComponent } from "./phase-mortalite/phase-mortalite.component";
-import { PhaseRevenuComponent } from "./phase-revenu/phase-revenu.component";
-import { PhaseForumComponent } from "./phase-forum/phase-forum.component";
+import { PhaseForumComponent } from './phase-forum/phase-forum.component';
+import { PhaseMortaliteComponent } from './phase-mortalite/phase-mortalite.component';
+import { PhaseRevenuComponent } from './phase-revenu/phase-revenu.component';
 
 @Component({
-    selector: "app-phases",
-    templateUrl: "./phases.component.html",
-    styleUrls: ["./phases.component.scss"],
-    imports: [PhaseMortaliteComponent, PhaseRevenuComponent, PhaseForumComponent]
+  selector: 'app-phases',
+  templateUrl: './phases.component.html',
+  styleUrls: ['./phases.component.scss'],
+  imports: [PhaseMortaliteComponent, PhaseRevenuComponent, PhaseForumComponent],
 })
 export class PhasesComponent implements OnInit {
   private phaseMortaliteService = inject(PhaseMortaliteService);
   private phaseRevenusService = inject(PhaseRevenusService);
-
 
   public tour = 1;
   public phase: Phase;

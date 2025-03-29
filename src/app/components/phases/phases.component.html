@@ -1,11 +1,10 @@
 <div class="fx-row fx-gap-50">
   <div class="fx-column">
-    <span class="phases">Tour {{tour}}</span>
-    <span class="phases">{{phase}}</span>
+    <span class="phases">Tour {{ tour }}</span>
+    <span class="phases">{{ phase }}</span>
   </div>
   @if (phase === 'Phase de mortalité') {
-    <app-phase-mortalite (fin)="finPhase('Phase de mortalité')">
-    </app-phase-mortalite>
+    <app-phase-mortalite (fin)="finPhase('Phase de mortalité')"></app-phase-mortalite>
   }
   @if (phase === 'Phase de revenu') {
     <app-phase-revenu (fin)="finPhase('Phase de revenu')"></app-phase-revenu>

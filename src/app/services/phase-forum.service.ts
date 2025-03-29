@@ -1,33 +1,32 @@
-import { Injectable, inject } from '@angular/core';
-import { RomeService } from './rome.service';
-import { TypeCarte, Faction, Senateur, SenateurVulnerable, TypeFaction } from '../data.interface';
-import { FactionService } from './faction.service';
+import { inject, Injectable } from '@angular/core';
 import { combineLatest } from 'rxjs';
 
+import { Faction, Senateur, SenateurVulnerable, TypeCarte, TypeFaction } from '../data.interface';
+import { FactionService } from './faction.service';
+import { RomeService } from './rome.service';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PhaseForumService {
   private romeService = inject(RomeService);
   private factionService = inject(FactionService);
 
-
   private factions: Faction[];
   private senateursNonAlignes: Senateur[];
 
   constructor() {
-    combineLatest([
-      this.factionService.getFactions(),
-      this.romeService.getReleveSenatoriale()
-    ]).subscribe(([f, rs]: [Faction[], Senateur[]]) => {
-      this.factions = f;
-      this.senateursNonAlignes = rs;
-    });
+    combineLatest([this.factionService.getFactions(), this.romeService.getReleveSenatoriale()]).subscribe(
+      ([f, rs]: [Faction[], Senateur[]]) => {
+        this.factions = f;
+        this.senateursNonAlignes = rs;
+      },
+    );
   }
 
   public initiative() {
     const de = this.romeService.getRandomNumber(12, 2);
-    console.log('Jet d\'initiative = ' + de);
+    console.log("Jet d'initiative = " + de);
     if (de === 7) {
       console.log('Evènement !');
     } else {
@@ -46,8 +45,8 @@ export class PhaseForumService {
     const sv: SenateurVulnerable = this.senateurPlusVulnerable(faction, sen1);
     msg.push('Le sénateur ' + sen1.nom + ' tente de corrompre le sénateur ' + sv.senateur.nom);
 
-    let nivReussite = sen1.eloquence + sen1.influence
-      - (sv.senateur.loyaute + sv.senateur.tresor + (sv.tresorFaction ? 7 : 0));
+    let nivReussite =
+      sen1.eloquence + sen1.influence - (sv.senateur.loyaute + sv.senateur.tresor + (sv.tresorFaction ? 7 : 0));
     msg.push('Niveau de réussite initial = ' + nivReussite);
     let tresorFactions = 0;
     this.factions.forEach((f: Faction) => {
@@ -57,21 +56,23 @@ export class PhaseForumService {
     });
     // TMP Tests
     nivReussite += 9;
-    if (nivReussite > 4 && (nivReussite - 4) <= tresorFactions) {
+    if (nivReussite > 4 && nivReussite - 4 <= tresorFactions) {
       // Contre-corruption des neutres
       let contreCorruption = 0;
       // Trier les factions par trésor décroissant
-      const fcc: Faction[] = this.factions.filter((f: Faction) => {
-        const qq = (f.id !== faction.id && f.id !== TypeFaction.JOUEUR);
-        return (f.id !== faction.id && f.id !== TypeFaction.JOUEUR);
-      }).sort((a: Faction, b: Faction) => {
-        if (a.tresor > b.tresor) {
-          return -1;
-        } else if (a.tresor < b.tresor) {
-          return 1;
-        }
-        return 0;
-      });
+      const fcc: Faction[] = this.factions
+        .filter((f: Faction) => {
+          const qq = f.id !== faction.id && f.id !== TypeFaction.JOUEUR;
+          return f.id !== faction.id && f.id !== TypeFaction.JOUEUR;
+        })
+        .sort((a: Faction, b: Faction) => {
+          if (a.tresor > b.tresor) {
+            return -1;
+          } else if (a.tresor < b.tresor) {
+            return 1;
+          }
+          return 0;
+        });
       while (nivReussite > 4) {
         // En cours
         const factionCouranteId = faction.suivant;
@@ -149,7 +150,7 @@ export class PhaseForumService {
         return prev;
       }
       // si égalité sénateur appartenant à la faction ayant le plus de voix
-      if ( prev.votesFaction > curr.votesFaction) {
+      if (prev.votesFaction > curr.votesFaction) {
         return curr;
       }
       return prev;

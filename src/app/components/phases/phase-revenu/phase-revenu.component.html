@@ -8,7 +8,7 @@
       @for (sen of gouverneurs; track sen; let i = $index) {
         <div class="fx-gap-30">
           <div>
-            <span>Le gouverneur {{sen.nom}} spolie-t'il sa province {{sen.province.nom}} ?</span>
+            <span>Le gouverneur {{ sen.nom }} spolie-t'il sa province {{ sen.province.nom }} ?</span>
             <mat-checkbox (change)="spoliationPar($event, sen, i)">Oui</mat-checkbox>
           </div>
           <span>{{ result[i] }}</span>

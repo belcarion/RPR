@@ -1,15 +1,15 @@
-import { Injectable, inject } from '@angular/core';
-import { Faction, Senateur, Concession, TypeFaction } from '../data.interface';
-import { RomeService } from './rome.service';
+import { inject, Injectable } from '@angular/core';
+
+import { Concession, Faction, Senateur, TypeFaction } from '../data.interface';
 import { FactionService } from './faction.service';
+import { RomeService } from './rome.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PhaseRevenusService {
   private romeService = inject(RomeService);
   private factionService = inject(FactionService);
-
 
   private factions: Faction[];
 
@@ -27,7 +27,7 @@ export class PhaseRevenusService {
       let revenus = 0;
       faction.senateurs.forEach((sen: Senateur) => {
         // Revenus de base
-        sen.chef ? revenus += 3 : revenus++;
+        sen.chef ? (revenus += 3) : revenus++;
         revenus += sen.chevaliers;
         if (sen.concessions && sen.concessions.length > 0) {
           sen.concessions.forEach((c: Concession) => {
@@ -58,8 +58,17 @@ export class PhaseRevenusService {
           if (test) {
             const sp = this.romeService.getRandomNumber(6, 1, sen.province.spoliation[sen.province.developpee]);
             sen.corrompu = true;
-            console.log('Le sénateur' + sen.nom + ' de la faction ' + faction.id
-              + ' spolie la province ' + sen.province.nom + ' pour ' + sp + ' T');
+            console.log(
+              'Le sénateur' +
+                sen.nom +
+                ' de la faction ' +
+                faction.id +
+                ' spolie la province ' +
+                sen.province.nom +
+                ' pour ' +
+                sp +
+                ' T',
+            );
             if (sp < 0) {
               this.romeService.majTresor(sp);
             } else {
@@ -194,12 +203,12 @@ export class PhaseRevenusService {
             pop += 1;
             sen.tresor -= 10;
           } else if (manqueInf <= 3 && sen.tresor >= 25) {
-           pop += 3;
-           sen.tresor -= 25;
-        } else if (manqueInf === 7 && sen.tresor >= 50) {
-          pop += 7;
-          sen.tresor -= 50;
-        } else if (sen.tresor >= c) {
+            pop += 3;
+            sen.tresor -= 25;
+          } else if (manqueInf === 7 && sen.tresor >= 50) {
+            pop += 7;
+            sen.tresor -= 50;
+          } else if (sen.tresor >= c) {
             switch (c) {
               case 10:
                 pop = 1;
@@ -219,8 +228,15 @@ export class PhaseRevenusService {
             sen.popularite += pop;
             this.factionService.majSenateur(sen);
             this.romeService.majTresor(c);
-            msg.push('Le sénateur ' + sen.nom + ' de la faction ' + f.nom
-            + ' contribue au trésor de Rome pour ' + c + 'talents.');
+            msg.push(
+              'Le sénateur ' +
+                sen.nom +
+                ' de la faction ' +
+                f.nom +
+                ' contribue au trésor de Rome pour ' +
+                c +
+                'talents.',
+            );
           }
         });
       }
